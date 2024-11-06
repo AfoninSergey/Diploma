@@ -1,3 +1,5 @@
+npm run server
+npm start
 ОБЛАСТИ ХРАНЕНИЯ ДАННЫХ:
 
 -   БД (db) на JSON Server
@@ -5,32 +7,26 @@
 -   Redux Store
 
 СУЩНОСТИ ПРИЛОЖЕНИЯ:
-- 	Администратор (administrator):	БД,
-									BFF (сессия),
-									Redux Store (для использования на клиенте - Отображение доп. кнопок, например.)
-
 -   Комбайны (combines): 			БД (список Комбайнов),
     								Redux Store (для отображения в браузере)
 
 -   Запчасти (parts) 				БД (список Запчастей),
    									Redux Store (для отображения в браузере)
 
--   Клиенты (clients): 				БД (список Зарегестрированных клиентов),
-    								BFF (текущая сессия Клиента),
+-   Пользователи (users):			БД (список Зарегестрированных Пользователей),
+    								BFF (текущая сессия Пользователя),
    									Redux Store (для отображения в браузере)
 
 -   Статус клиента (status):		БД (список Статусов),
     								BFF (текущая сессия Клиента со статусом),
     								Redux Store (для использования на клиенте - Отображение нужной скидки/цены)
 
-- Роль (role):                   	БД (список Ролей),
+-	Роль (role):                   	БД (список Ролей),
 									BFF (текущая сессия Клиента с ролью),
 
 -   Корзина покупок (cart):			Redux Store (для отображения в браузере и отправки заявки)
 
 ТАБЛИЦЫ (СХЕМЫ) БД:
-- 	Администратор (administrator): id / login / password / admin
-
 -   Комбайны (combines): id / name
 
 -   Запчасти (parts): id / image_url / number / name / quantity / price / combine_id
@@ -39,7 +35,7 @@
 
 -	Роль (role): id / name
 
--   Клиенты (clients): id / login / password / role_id / status_id / amount
+-   Пользователи (users): id / login / password / role_id / status_id / amount
 
 ТАБЛИЦЫ (СХЕМЫ) BFF:
 
@@ -49,5 +45,5 @@
 
 -   combine(s): id / name
 -   part(s): id / imageUrl / article / name / quantity / price / combineId
--   client: id / login / roleId / statusId / amount
+-   user: id / login / roleId / statusId / amount
 -   cart: parts: [part_id / quantity]

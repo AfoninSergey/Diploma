@@ -1,4 +1,6 @@
-.app {
-	text-align: center;
-	color:chocolate;
+h1 {
+	display: none;
+}
+.onlineStore {
+	padding: 110px 0;
 }
