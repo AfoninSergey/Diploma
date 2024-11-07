@@ -27,3 +27,14 @@
 	color: #ffffff;
 	box-shadow: none;
 }
+
+.button[disabled] {
+	background: rgba(0, 0, 0, 0.15);
+	backdrop-filter: blur(25px);
+}
+
+.button[disabled]:hover {
+	color: #f5f5f5;
+	box-shadow: none;
+	cursor: not-allowed;
+}

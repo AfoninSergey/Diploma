@@ -1,4 +1,5 @@
 .input {
+	position: relative;
 	height: 51px;
 	border: 2px solid #232323;
 	background-color: #c4c4c4;
@@ -7,4 +8,16 @@
 	padding: 0 10px;
 	font-size: 28px;
 	line-height: 120%;
+	/* margin-top: 12px; */
+}
+
+
+.label {
+	padding: 5px 10px;
+	display: block;
+	margin-top: 25px;
+	/* margin-bottom: -12px; */
+	font-size: 21px;
+	font-weight: 700;
+	line-height: 25px;
 }

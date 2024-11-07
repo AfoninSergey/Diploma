@@ -6,8 +6,9 @@
 .logo img {
 	width: 473px;
 	height: 176px;
-	transition: all .4s;
+	transition: all 0.2s;
 }
+
 .logo img:hover {
 	transform: scale(1.01);
 }

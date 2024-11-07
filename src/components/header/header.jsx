@@ -8,7 +8,7 @@ export const Header = () => (
 		<Logo />
 		<AdminPanel/>
 		<Link to="/login">
-			<Button type="button">Войти</Button>
+			<Button type="button">Вход</Button>
 		</Link>
 	</header>
 );
