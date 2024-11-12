@@ -45,5 +45,5 @@ npm start
 
 -   combine(s): id / name
 -   part(s): id / imageUrl / article / name / quantity / price / combineId
--   user: id / login / roleId / statusId / amount
+-   user: id / login / roleId / statusId / amount / session
 -   cart: parts: [part_id / quantity]

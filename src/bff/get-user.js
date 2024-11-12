@@ -1,7 +1,7 @@
-import { getUsers } from './get-users';
+import { URL } from './constants';
+import { transformUser } from './transformers';
 
-export const getUser = async (loginToFind) => {
-	const users = await getUsers();
-
-	return users.find(({ login }) => login === loginToFind);
-};
+export const getUser = (loginToFind) =>
+	fetch(`${URL.USERS}?login=${loginToFind}`)
+		.then((response) => response.json())
+		.then(([loadedUser]) => loadedUser && transformUser(loadedUser));

@@ -4,7 +4,7 @@
 // import { server } from './bff';
 import { Route, Routes } from 'react-router-dom';
 import { Header } from './components';
-import { Authorization } from './pages';
+import { AuthorizeAndRegister } from './pages';
 import styles from './online-store.module.css';
 
 // server.authorize('ASPiRe_Gray ', '123');
@@ -13,8 +13,6 @@ import styles from './online-store.module.css';
 // server.register('ASPiRe_Gray', '123');
 
 // server.register('Ivan', '123');
-
-
 
 const Content = ({ children }) => <div>{children}</div>;
 const Main = () => (
@@ -29,7 +27,7 @@ export const OnlineStore = () => {
 		<div className={styles.onlineStore}>
 			<h1>"Сельхоззапчасть" - Интернет-магазин сельхоззапчастей.</h1>
 			<Content>
-					<Header/>
+				<Header />
 				<Routes>
 					<Route path="/" element={<Main />} />
 
@@ -65,12 +63,8 @@ export const OnlineStore = () => {
 							</div>
 						}
 					/>
-					<Route
-						path="/login"
-						element={
-							<Authorization/>
-						}
-					/>
+					<Route path="/login" element={<AuthorizeAndRegister />} />
+					<Route path="/register" element={<AuthorizeAndRegister />} />
 					<Route
 						path="/*"
 						element={

@@ -1,12 +1,19 @@
-import { ROLE, URL } from './constants';
+import { addUser } from './add-user';
+import { ROLE} from './constants';
+import { getStatuses } from './get-statuses';
 import { getUser } from './get-user';
+import { sessions } from './sessions';
+import { getUserStatus } from './utils';
 
 export const server = {
+	logout(session) {
+		sessions.remove(session);
+	},
+
 	async authorize(authLogin, authPassword) {
 		const user = await getUser(authLogin);
 
 		if (!user) {
-			console.log('Такой пользователь не найден');
 			return {
 				error: 'Такой пользователь не найден',
 				response: null,
@@ -14,47 +21,58 @@ export const server = {
 		}
 
 		if (user.password !== authPassword) {
-			console.log('Неверный пароль');
 			return {
 				error: 'Неверный пароль',
 				response: null,
 			};
+		} else {
+			delete user.password;
 		}
-		console.log('Авторизация прошла успешно');
+
+		const statuses = await getStatuses();
+		const session = sessions.create(user);
+
+		if (user.roleId === ROLE.ADMIN)
+			return {
+				error: null,
+				response: {
+					loadedUser: { ...user, session },
+					loadedStatuses: statuses,
+				},
+			};
+
+		const userStatus = getUserStatus(statuses, user.statusId, user.amount);
+
 		return {
 			error: null,
-			response: true,
+			response: {
+				loadedUser: { ...user, session, status: userStatus },
+				loadedStatuses: statuses,
+			},
 		};
 	},
 
 	async register(regLogin, regPassword) {
-		const user = await getUser(regLogin);
+		const existedUser = await getUser(regLogin);
 
-		if (user) {
-			console.log('Пользователь с таким логином уже зарегестрирован');
+		if (existedUser) {
 			return {
 				error: 'Пользователь с таким логином уже зарегестрирован',
 				response: null,
 			};
 		}
 
-		await fetch(URL.USERS, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'Application/json; Charset=UTF-8',
-			},
-			body: JSON.stringify({
-				login: regLogin,
-				password: regPassword,
-				role_id: ROLE.CLIENT,
-				status_id: 0,
-				amount: '',
-			}),
-		});
-		console.log('Регистрация прошла успешно');
+		const registeredUser = await addUser(regLogin, regPassword)
+		const statuses = await getStatuses();
+		const userStatus = getUserStatus(statuses, registeredUser.statusId, registeredUser.amount);
+		const session = sessions.create(registeredUser);
+
 		return {
 			error: null,
-			response: true,
+			response: {
+				loadedUser: { ...registeredUser, session, status: userStatus },
+				loadedStatuses: statuses,
+			},
 		};
 	},
 };
