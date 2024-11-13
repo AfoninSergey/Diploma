@@ -1,27 +1,27 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useMatch } from 'react-router-dom';
+import { Link, useMatch, useNavigate } from 'react-router-dom';
 import { Button, Form, Input } from '../../components';
-import { server } from '../../bff/server';
+import { server } from '../../bff';
 import {
 	logout,
+	setUser,
+	setStatuses,
+	setLoginValue,
+	setServerError,
+	setPasswordValue,
+	setValidationError,
+	setRepeatPasswordValue,
 	RESET_AUTH_AND_REG_FORM,
 	RESET_AUTH_AND_REG_FORM_ERROR,
-	setLoginValue,
-	setPasswordValue,
-	setRepeatPasswordValue,
-	setServerError,
-	setStatuses,
-	setUser,
-	setValidationError,
 } from '../../actions';
 import {
-	selectLoginValue,
-	selectPasswordValue,
-	selectRepeatPasswordValue,
-	selectServerError,
 	selectUserLogin,
+	selectLoginValue,
+	selectServerError,
 	selectUserSession,
+	selectPasswordValue,
 	selectValidationError,
+	selectRepeatPasswordValue,
 } from '../../selectors';
 import {
 	validateLogin,
@@ -40,24 +40,28 @@ export const AuthorizeAndRegister = () => {
 
 	const userLogin = useSelector(selectUserLogin);
 	const userSession = useSelector(selectUserSession);
+
 	const isReg = !!useMatch('/register');
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const onLoginChange = ({ target: { value } }) => {
 		dispatch(setLoginValue(value));
-		const newError = validateLogin(value);
+		const newError = validateLogin(value) || validatePassword(passwordValue);
 		dispatch(setValidationError(newError));
 	};
 
 	const onPasswordChange = ({ target: { value } }) => {
 		dispatch(setPasswordValue(value));
-		const newError = validatePassword(value);
+		const newError = validatePassword(value) || validateLogin(loginValue);
 		dispatch(setValidationError(newError));
 	};
 
 	const onRepeatPasswordChange = ({ target: { value } }) => {
 		dispatch(setRepeatPasswordValue(value));
-		dispatch(setValidationError(null));
+		const newError =
+			validatePassword(passwordValue) || validateLogin(loginValue);
+		dispatch(setValidationError(newError));
 	};
 
 	const onRepeatPasswordCheck = ({ target: { value } }) => {
@@ -75,7 +79,8 @@ export const AuthorizeAndRegister = () => {
 				passwordValue,
 				repeatPasswordValue,
 				isReg,
-			);
+			) ||
+			validateRepeatPassword(passwordValue, repeatPasswordValue, isReg);
 
 		if (newError) {
 			dispatch(setValidationError(newError));
@@ -93,6 +98,7 @@ export const AuthorizeAndRegister = () => {
 				dispatch(setUser(response.loadedUser));
 				dispatch(setStatuses(response.loadedStatuses));
 				dispatch(RESET_AUTH_AND_REG_FORM);
+				navigate('/')
 			}
 		});
 	};

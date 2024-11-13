@@ -1,4 +1,5 @@
 import { STATUS } from '../constants';
+import { getZeros } from './get-zeros';
 
 export const getUserStatus = (statuses, userStatusId, userAmount) => {
 	const { discount, limit } = statuses.find(
@@ -8,7 +9,7 @@ export const getUserStatus = (statuses, userStatusId, userAmount) => {
 	return userStatusId !== STATUS.LARGE_WHOLESALE
 		? {
 				discount,
-				remainAmount: limit - userAmount,
+				remainAmount: getZeros(limit - userAmount),
 				nextDiscount: discount + 5,
 			}
 		: { discount };

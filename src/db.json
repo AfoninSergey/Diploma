@@ -3,7 +3,7 @@
   "users": [
     {
       "id": "0001",
-      "login": "ASPiRe_Gray",
+      "login": "admin",
       "password": "123",
       "role_id": 2
     },
@@ -28,8 +28,32 @@
       "login": "Gray",
       "password": "123",
       "role_id": 1,
+      "status_id": 1,
+      "amount": "35150.5"
+    },
+    {
+      "login": "Ivan",
+      "password": "123",
+      "role_id": 1,
       "status_id": 0,
-      "amount": "1.5"
+      "amount": "0",
+      "id": "2T1Vj-R"
+    },
+    {
+      "login": "Test2",
+      "password": "123",
+      "role_id": 1,
+      "status_id": 0,
+      "amount": "0",
+      "id": "AJZCD27"
+    },
+    {
+      "login": "Test",
+      "password": "123",
+      "role_id": 1,
+      "status_id": 0,
+      "amount": "0",
+      "id": "w71nPrU"
     }
   ],
   "roles": [

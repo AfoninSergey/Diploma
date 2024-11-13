@@ -1,18 +1,7 @@
-// npm run server
-// npm start
-
-// import { server } from './bff';
 import { Route, Routes } from 'react-router-dom';
 import { Header } from './components';
-import { AuthorizeAndRegister } from './pages';
+import { AuthorizeAndRegister, Users } from './pages';
 import styles from './online-store.module.css';
-
-// server.authorize('ASPiRe_Gray ', '123');
-// server.authorize('ASPiRe_Gray', '123 ');
-// server.authorize('ASPiRe_Gray', '123');
-// server.register('ASPiRe_Gray', '123');
-
-// server.register('Ivan', '123');
 
 const Content = ({ children }) => <div>{children}</div>;
 const Main = () => (
@@ -63,6 +52,7 @@ export const OnlineStore = () => {
 							</div>
 						}
 					/>
+					<Route path="/users" element={<Users />} />
 					<Route path="/login" element={<AuthorizeAndRegister />} />
 					<Route path="/register" element={<AuthorizeAndRegister />} />
 					<Route

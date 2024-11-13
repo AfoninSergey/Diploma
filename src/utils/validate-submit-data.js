@@ -11,10 +11,9 @@ export const validateSubmitData = (login, password, repeatPassword, isReg) => {
 		error = ERROR_MESSAGE.REQUIRED;
 	} else if (login.length < 3) {
 		error = ERROR_MESSAGE.LOGIN_SHORT;
-	} else if (password.length < 3) {
-		//ДЛЯ ТЕСТИРОВАНИЯ. ИСПРАВИТЬ ПОТОМ!
+	} else if (password.length < 3) {//TODO Для тестирования. исправить потом 3 на 7!
 		error = ERROR_MESSAGE.PASSWORD_SHORT;
 	}
 
-	return error
+	return error;
 };

@@ -1,4 +1,4 @@
-.input {
+.select {
 	position: relative;
 	height: 51px;
 	border: 2px solid #232323;
@@ -10,12 +10,3 @@
 	line-height: 120%;
 }
 
-
-.label {
-	padding: 5px 10px;
-	display: block;
-	margin-top: 25px;
-	font-size: 21px;
-	font-weight: 700;
-	line-height: 25px;
-}

@@ -1,5 +1,5 @@
-import { ROLE, URL } from './constants';
-import { transformUser } from './transformers';
+import { ROLE, URL } from '../constants';
+import { transformUser } from '../transformers';
 
 export const addUser = (login, password) =>
 	fetch(URL.USERS, {

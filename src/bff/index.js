@@ -1,1 +1,1 @@
-export * from './bff'
+export * as server from './operations'

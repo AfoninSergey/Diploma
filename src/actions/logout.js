@@ -1,4 +1,4 @@
-import { server } from '../bff/server';
+import { server } from '../bff';
 import { ACTION_TYPE } from './action-type';
 
 export const logout = (session) => {

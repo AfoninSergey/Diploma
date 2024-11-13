@@ -7,3 +7,4 @@ export * from './select-password-value';
 export * from './select-repeat-password-value';
 export * from './select-server-error';
 export * from './select-validation-error';
+export * from './select-statuses';
