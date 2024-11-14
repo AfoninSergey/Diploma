@@ -30,4 +30,7 @@ body,
 a {
 	text-decoration: none;
 };
-
+.noScroll {
+	overflow: hidden;
+	padding-right: 15px;
+}

@@ -1,1 +1,2 @@
-export * as server from './operations'
+export * as server from './operations';
+

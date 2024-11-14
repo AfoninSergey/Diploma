@@ -40,20 +40,20 @@
       "id": "2T1Vj-R"
     },
     {
-      "login": "Test2",
-      "password": "123",
-      "role_id": 1,
-      "status_id": 0,
-      "amount": "0",
-      "id": "AJZCD27"
-    },
-    {
       "login": "Test",
       "password": "123",
       "role_id": 1,
       "status_id": 0,
       "amount": "0",
-      "id": "w71nPrU"
+      "id": "w4u4W6u"
+    },
+    {
+      "login": "Test2",
+      "password": "123",
+      "role_id": 1,
+      "status_id": 0,
+      "amount": "0",
+      "id": "oB7p60k"
     }
   ],
   "roles": [

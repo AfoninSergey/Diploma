@@ -8,6 +8,8 @@ const initialAppState = {
 		validationError: null,
 		serverError: null,
 	},
+	accessError: 'Доступ запрещён!',
+	isLoading: true,
 };
 export const appReducer = (state = initialAppState, { type, payload }) => {
 	switch (type) {
@@ -69,6 +71,11 @@ export const appReducer = (state = initialAppState, { type, payload }) => {
 					serverError: null,
 					validationError: null,
 				},
+			};
+		case ACTION_TYPE.SET_ACCESS_ERROR:
+			return {
+				...state,
+				accessError: payload,
 			};
 		default:
 			return state;

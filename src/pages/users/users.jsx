@@ -1,34 +1,64 @@
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Form } from '../../components';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, Form /* Loader */, SearchPanel } from '../../components';
 import { UserItem, UsersTitle } from './components';
-import { selectStatuses } from '../../selectors';
+import {
+	selectAccessError,
+	selectStatuses,
+	selectUsers,
+	selectUserSession,
+} from '../../selectors';
 import styles from './users.module.css';
-import { getUsers } from '../../bff/api/get-users';
+import { server } from '../../bff';
+import { setAccessError, setUsers } from '../../actions';
+// import { ErrorPage } from '../error-page/error-page';
 
 export const Users = () => {
 	const statuses = useSelector(selectStatuses);
-	const [users, setUsers] = useState([]);
+	const userSession = useSelector(selectUserSession);
+	const accessError = useSelector(selectAccessError);
+	const users = useSelector(selectUsers);
+
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		const loadedUsers = getUsers();
-		loadedUsers.then((loadedUsers) => setUsers(loadedUsers));
-	}, []);
+		server.fetchUsers(userSession).then((loadedUsers) => {
+			dispatch(setAccessError(loadedUsers.error));
+
+			if (!accessError && loadedUsers.response !== null) {
+				dispatch(setUsers(loadedUsers.response));
+			}
+		});
+	}, [userSession, dispatch, accessError]);
+
+	// return (<Loader/>) TODO
+
+	// if (accessError) return <ErrorPage>{accessError}</ErrorPage>; TODO
 
 	return (
-		<Form title="Клиенты:" className={styles.users}>
-			<UsersTitle />
+		<section className={styles.users}>
+			<SearchPanel>
+				<Button type="button" small up>
+					По сумме
+				</Button>
+				<Button type="button" small down>
+					По алфавиту
+				</Button>
+			</SearchPanel>
+			<Form title="Клиенты:" className={styles.usersForm}>
+				<UsersTitle />
 
-			{users.map(({ id, login, statusId, amount }, i) => (
-				<UserItem
-					key={id}
-					num={i + 1}
-					login={login}
-					statusId={statusId}
-					amount={amount}
-					statuses={statuses}
-				/>
-			))}
-		</Form>
+				{users.map(({ id, login, statusId, amount }, i) => (
+					<UserItem
+						key={id}
+						num={i + 1}
+						login={login}
+						statusId={statusId}
+						amount={amount}
+						statuses={statuses}
+					/>
+				))}
+			</Form>
+		</section>
 	);
 };

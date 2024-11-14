@@ -1,41 +1,7 @@
 .users {
 	width:1080px;
+	margin: 0 auto;
 }
-/*
-.usersItem,
-.usersTitle {
-	display: flex;
-	gap: 10px;
+.usersForm {
+	width: 100%;
 }
-.usersTitle {
-	padding: 4px 0;
-	margin-top: 15px;
-	font-size: 21px;
-	font-weight: 700;
-	line-height: 25px;
-}
-.usersTitle span {
-	padding: 0 7px;
-}
-
-.usersItem {
-	margin-bottom: 10px;
-}
-
-.usersNum {
-	width: 70px;
-	font-weight: bold;
-}
-input.usersNum {
-	text-align: center;
-}
-.usersLogin {
-	width: 300px;
-}
-
-.usersStatus {
-	width: 170px;
-}
-.usersAmount {
-	width: 185px;
-} */

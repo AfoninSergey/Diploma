@@ -1,2 +1,2 @@
-export * from './get-user-status';
+export * from './calculate-user-status';
 export * from './get-zeros';

@@ -1,6 +1,6 @@
 import { addUser, getStatuses, getUser } from '../api';
 import { sessions } from '../sessions';
-import { getUserStatus } from '../utils';
+import { calculateUserStatus } from '../utils';
 
 export const register = async (regLogin, regPassword) => {
 	const existedUser = await getUser(regLogin);
@@ -12,21 +12,21 @@ export const register = async (regLogin, regPassword) => {
 		};
 	}
 
-	// const registeredUser = await addUser(regLogin, regPassword);
-	// const statuses = await getStatuses();
-
 	const [registeredUser, statuses] = await Promise.all([
 		addUser(regLogin, regPassword),
 		getStatuses(),
 	]);
 
-	const userStatus = getUserStatus(
+	delete registeredUser.password;
+
+	const userStatus = calculateUserStatus(
 		statuses,
 		registeredUser.statusId,
 		registeredUser.amount,
 	);
 
-	const session = sessions.create(registeredUser);
+	const session = sessions.create(registeredUser.roleId);
+
 
 	return {
 		error: null,
