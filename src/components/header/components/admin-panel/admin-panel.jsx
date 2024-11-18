@@ -8,7 +8,7 @@ import { logout } from '../../../../actions';
 export const AdminPanel = () => {
 	const dispatch = useDispatch();
 	const userSession = useSelector(selectUserSession);
-console.log('userSession',userSession)
+
 	return (
 		<div className={styles.adminPanel}>
 			<div className={styles.editButtons}>

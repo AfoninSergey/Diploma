@@ -22,7 +22,7 @@
 .smallButton {
 	font-size: 26px;
 	height: 52px;
-	padding: 0 17px;
+	padding: 0 22px;
 	background: linear-gradient(
 		rgb(73, 73, 73) 0%,
 		rgb(98, 98, 98) 50%,
@@ -34,7 +34,12 @@
 
 .up,
 .down {
-	padding-right: 25px;
+	background: linear-gradient(
+		rgb(23, 23, 23) 0%,
+		rgb(28, 28, 28) 50%,
+		rgb(18, 18, 18) 50%,
+		rgb(18, 18, 18) 100%
+	);
 }
 
 .up::before,

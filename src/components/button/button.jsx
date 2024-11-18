@@ -1,11 +1,20 @@
 import styles from './button.module.css';
 
-export const Button = ({ children, small, save, del, cancel, gray, up, down, ...props }) => (
+export const Button = ({
+	children,
+	small,
+	save,
+	del,
+	cancel,
+	gray,
+	sort,
+	...props
+}) => (
 	<button
 		className={`
 			${styles.button}
-			${up ? styles.up : ''}
-			${down ? styles.down : ''}
+			${sort === 1 ? styles.up : ''}
+			${sort === 2 ? styles.down : ''}
 			${small ? styles.smallButton : ''}
 			${save ? styles.saveButton : ''}
 			${del ? styles.deleteButton : ''}

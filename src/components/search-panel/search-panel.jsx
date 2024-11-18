@@ -1,7 +1,7 @@
 import { Input } from '../input/input';
 import styles from './search-panel.module.css';
 
-export const SearchPanel = ({children}) => (
+export const SearchPanel = ({ children, value, onChange }) => (
 	<section className={styles.searchPanel}>
 		<Input
 			id="search"
@@ -15,7 +15,9 @@ export const SearchPanel = ({children}) => (
 			type="text"
 			placeholder="Найти клиента..."
 			className={styles.searchInput}
+			value={value}
+			onChange={onChange}
 		/>
-		{children}
+		<div className={styles.sortingBlock}>{children}</div>
 	</section>
 );
