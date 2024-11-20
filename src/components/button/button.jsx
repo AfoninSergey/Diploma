@@ -1,6 +1,7 @@
 import styles from './button.module.css';
 
 export const Button = ({
+	type,
 	children,
 	small,
 	save,
@@ -22,6 +23,7 @@ export const Button = ({
 			${cancel ? styles.cancelButton : ''}
 			`}
 		{...props}
+		type={type || 'button'}
 	>
 		{children}
 	</button>

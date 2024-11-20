@@ -1,1 +1,1 @@
-export const selectServerError = ({ app }) => app.authAndRegForm.serverError;
+export const selectServerError = ({ app }) => app.serverError;

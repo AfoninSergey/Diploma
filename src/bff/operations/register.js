@@ -7,7 +7,7 @@ export const register = async (regLogin, regPassword) => {
 
 	if (existedUser) {
 		return {
-			error: 'Пользователь с таким логином уже зарегестрирован',
+			error: 'Пользователь с таким логином уже зарегестрирован!',
 			response: null,
 		};
 	}

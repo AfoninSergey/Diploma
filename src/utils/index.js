@@ -6,3 +6,6 @@ export * from './get-current-sorting-order';
 export * from './search';
 export * from './sort-by-number';
 export * from './sort-by-alphabet';
+export * from './get-zeros';
+export * from './get-appropriate-amount';
+export * from './get-appropriate-status-id'

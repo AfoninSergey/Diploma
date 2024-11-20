@@ -1,18 +1,21 @@
 import { useDispatch, useSelector } from 'react-redux';
-import {
-	selectUserLogin,
-	selectUserSession,
-	selectUserStatus,
-} from '../../../../selectors';
+import { selectUserLogin, selectUserStatus } from '../../../../selectors';
 import { Button } from '../../../button/button';
 import styles from './user-panel.module.css';
-import { logout } from '../../../../actions';
+import { LOGOUT } from '../../../../actions';
+import { useServerRequest } from '../../../../hooks';
 
 export const UserPanel = () => {
-	const dispatch = useDispatch();
 	const userLogin = useSelector(selectUserLogin);
 	const userStatus = useSelector(selectUserStatus);
-	const userSession = useSelector(selectUserSession);
+
+	const dispatch = useDispatch();
+	const requestServer = useServerRequest();
+
+	const onLogout = () => {
+		requestServer('logout');
+		dispatch(LOGOUT);
+	};
 
 	return (
 		<div className={styles.userPanel}>
@@ -37,11 +40,7 @@ export const UserPanel = () => {
 					<div className={styles.vip}>vip</div>
 				)}
 			</div>
-			<Button
-				small
-				type="button"
-				onClick={() => dispatch(logout(userSession))}
-			>
+			<Button small onClick={onLogout}>
 				Выйти
 			</Button>
 		</div>

@@ -7,12 +7,12 @@ export const ErrorPage = ({ children }) => {
 	return (
 		<section className={styles.errorPage}>
 			<Link to="/">
-				<Button type="button">На главную</Button>
+				<Button>На главную</Button>
 			</Link>
 
 			<div className={styles.errorMessage}>{children}</div>
 
-				<Button type="button" onClick={() => navigate(-1)}>Назад</Button>
+				<Button onClick={() => navigate(-1)}>Назад</Button>
 
 		</section>
 	);

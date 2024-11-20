@@ -1,13 +1,18 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button } from '../../../button/button';
+import { LOGOUT } from '../../../../actions';
+import { useServerRequest } from '../../../../hooks';
 import styles from './admin-panel.module.css';
-import { selectUserSession } from '../../../../selectors';
-import { logout } from '../../../../actions';
 
 export const AdminPanel = () => {
 	const dispatch = useDispatch();
-	const userSession = useSelector(selectUserSession);
+	const requestServer = useServerRequest()
+
+	const onLogout = () => {
+		requestServer('logout')
+		dispatch(LOGOUT);
+	};
 
 	return (
 		<div className={styles.adminPanel}>
@@ -27,9 +32,7 @@ export const AdminPanel = () => {
 				</Link>
 			</div>
 
-			<Button type="button" onClick={() => dispatch(logout(userSession))}>
-				Выйти
-			</Button>
+			<Button onClick={onLogout}>Выйти</Button>
 		</div>
 	);
 };

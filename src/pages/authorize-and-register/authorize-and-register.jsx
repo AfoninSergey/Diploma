@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useMatch, useNavigate } from 'react-router-dom';
 import { Button, Form, Input } from '../../components';
-import { server } from '../../bff';
+
 import {
-	logout,
+	LOGOUT,
 	setUser,
 	setStatuses,
 	setLoginValue,
@@ -18,7 +18,6 @@ import {
 	selectUserLogin,
 	selectLoginValue,
 	selectServerError,
-	selectUserSession,
 	selectPasswordValue,
 	selectValidationError,
 	selectRepeatPasswordValue,
@@ -30,6 +29,7 @@ import {
 	validateSubmitData,
 } from '../../utils';
 import styles from './authorize-and-register.module.css';
+import { useServerRequest } from '../../hooks';
 
 export const AuthorizeAndRegister = () => {
 	const loginValue = useSelector(selectLoginValue);
@@ -37,13 +37,17 @@ export const AuthorizeAndRegister = () => {
 	const repeatPasswordValue = useSelector(selectRepeatPasswordValue);
 	const serverError = useSelector(selectServerError);
 	const validationError = useSelector(selectValidationError);
-
 	const userLogin = useSelector(selectUserLogin);
-	const userSession = useSelector(selectUserSession);
 
 	const isReg = !!useMatch('/register');
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const requestServer = useServerRequest();
+
+	const onLogout = () => {
+		requestServer('logout');
+		dispatch(LOGOUT);
+	};
 
 	const onLoginChange = ({ target: { value } }) => {
 		dispatch(setLoginValue(value));
@@ -88,8 +92,8 @@ export const AuthorizeAndRegister = () => {
 		}
 
 		const serverResponse = isReg
-			? server.register(loginValue, passwordValue)
-			: server.authorize(loginValue, passwordValue);
+			? requestServer('register', loginValue, passwordValue)
+			: requestServer('authorize', loginValue, passwordValue);
 
 		serverResponse.then(({ error, response }) => {
 			if (error) {
@@ -98,7 +102,7 @@ export const AuthorizeAndRegister = () => {
 				dispatch(setUser(response.loadedUser));
 				dispatch(setStatuses(response.loadedStatuses));
 				dispatch(RESET_AUTH_AND_REG_FORM);
-				navigate('/')
+				navigate('/');
 			}
 		});
 	};
@@ -108,9 +112,7 @@ export const AuthorizeAndRegister = () => {
 	if (userLogin) {
 		return (
 			<Form className={styles.exit} title={userLogin}>
-				<Button type="button" onClick={() => dispatch(logout(userSession))}>
-					Выйти
-				</Button>
+				<Button onClick={onLogout}>Выйти</Button>
 			</Form>
 		);
 	}

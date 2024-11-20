@@ -1,4 +1,5 @@
 import { ACTION_TYPE } from '../actions';
+import { ERROR_MESSAGE } from '../constants';
 
 const initialAppState = {
 	authAndRegForm: {
@@ -6,46 +7,47 @@ const initialAppState = {
 		password: '',
 		repeatPassword: '',
 		validationError: null,
-		serverError: null,
 	},
-	accessError: 'Доступ запрещён!',
+	serverError: null,
+	accessError: ERROR_MESSAGE.ACCESS,
 	isLoading: true,
+	updateUsersTrigger: false,
 };
 export const appReducer = (state = initialAppState, { type, payload }) => {
 	switch (type) {
 		case ACTION_TYPE.SET_LOGIN:
 			return {
 				...state,
+				serverError: null,
 				authAndRegForm: {
 					...state.authAndRegForm,
 					login: payload,
-					serverError: null,
 				},
 			};
 		case ACTION_TYPE.SET_PASSWORD:
 			return {
 				...state,
+				serverError: null,
 				authAndRegForm: {
 					...state.authAndRegForm,
 					password: payload,
-					serverError: null,
 				},
 			};
 		case ACTION_TYPE.SET_REPEAT_PASSWORD:
 			return {
 				...state,
+				serverError: null,
 				authAndRegForm: {
 					...state.authAndRegForm,
 					repeatPassword: payload,
-					serverError: null,
 				},
 			};
 		case ACTION_TYPE.SET_SERVER_ERROR:
 			return {
 				...state,
+				serverError: payload,
 				authAndRegForm: {
 					...state.authAndRegForm,
-					serverError: payload,
 				},
 			};
 		case ACTION_TYPE.SET_VALIDATION_ERROR:
@@ -66,9 +68,9 @@ export const appReducer = (state = initialAppState, { type, payload }) => {
 		case ACTION_TYPE.RESET_AUTH_AND_REG_FORM_ERROR:
 			return {
 				...state,
+				serverError: null,
 				authAndRegForm: {
 					...state.authAndRegForm,
-					serverError: null,
 					validationError: null,
 				},
 			};
@@ -76,6 +78,11 @@ export const appReducer = (state = initialAppState, { type, payload }) => {
 			return {
 				...state,
 				accessError: payload,
+			};
+		case ACTION_TYPE.CHANGE_TRIGGER:
+			return {
+				...state,
+				updateUsersTrigger: !state.updateUsersTrigger,
 			};
 		default:
 			return state;

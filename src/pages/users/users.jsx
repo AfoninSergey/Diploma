@@ -4,27 +4,30 @@ import { Button, Form /* Loader */, SearchPanel } from '../../components';
 import { UserItem, UsersTitle } from './components';
 import {
 	selectAccessError,
+	selectServerError,
 	selectStatuses,
+	selectUpdateUsersTrigger,
 	selectUsers,
-	selectUserSession,
 } from '../../selectors';
-import { server } from '../../bff';
 import { setAccessError, setUsers } from '../../actions';
-// import { ErrorPage } from '../error-page/error-page';
+import { ErrorPage } from '../error-page/error-page';
 import {
 	getCurrentSortingOrder,
 	search,
 	sortByAlphabet,
 	sortByNumber,
 } from '../../utils';
-import { SORTING_ORDER } from '../../constants';
+import { ERROR_MESSAGE, SORTING_ORDER } from '../../constants';
 import styles from './users.module.css';
+import { useServerRequest } from '../../hooks';
+
 
 export const Users = () => {
 	const statuses = useSelector(selectStatuses);
-	const userSession = useSelector(selectUserSession);
 	const accessError = useSelector(selectAccessError);
 	const users = useSelector(selectUsers);
+	const serverError = useSelector(selectServerError);
+	const trigger = useSelector(selectUpdateUsersTrigger)
 
 	const [usersToDisplay, setUsersToDisplay] = useState(users);
 	const [searchString, setSearchString] = useState('');
@@ -36,9 +39,11 @@ export const Users = () => {
 	);
 
 	const dispatch = useDispatch();
+	const requestServer = useServerRequest();
 
 	useEffect(() => {
-		server.fetchUsers(userSession).then((loadedUsers) => {
+		console.log('useEffect')
+		requestServer('fetchUsers').then((loadedUsers) => {
 			dispatch(setAccessError(loadedUsers.error));
 
 			if (!accessError && loadedUsers.response !== null) {
@@ -46,7 +51,7 @@ export const Users = () => {
 				setUsersToDisplay(loadedUsers.response);
 			}
 		});
-	}, [userSession, dispatch, accessError]);
+	}, [requestServer, dispatch, accessError, trigger]);
 
 	const onSearchString = ({ target: { value } }) => {
 		setSearchString(value);
@@ -72,7 +77,7 @@ export const Users = () => {
 
 		let sortedUsers = sortByAlphabet(currentSortingOrder, users, 'login');
 
-		if (searchString.trim().length !== 0) {
+		if (searchString.length !== 0) {
 			sortedUsers = search(sortedUsers, searchString, 'login');
 		}
 
@@ -89,7 +94,7 @@ export const Users = () => {
 
 		let sortedUsers = sortByNumber(currentSortingOrder, users, 'amount');
 
-		if (searchString.trim().length !== 0) {
+		if (searchString.length !== 0) {
 			sortedUsers = search(sortedUsers, searchString, 'login');
 		}
 
@@ -98,38 +103,36 @@ export const Users = () => {
 
 	// return (<Loader/>) TODO
 
-	// if (accessError) return <ErrorPage>{accessError}</ErrorPage>; TODO
+	if (accessError) return <ErrorPage>{accessError}</ErrorPage>;
+
+	const errorMessage =
+		usersToDisplay.length === 0 ? ERROR_MESSAGE.NO_USERS_FOUND : serverError;
 
 	return (
 		<section className={styles.users}>
 			<SearchPanel value={searchString} onChange={onSearchString}>
-				<Button
-					type="button"
-					small
-					sort={alphabetSortingOrder}
-					onClick={onAlphabetSort}
-				>
+				<Button small sort={alphabetSortingOrder} onClick={onAlphabetSort}>
 					По алфавиту
 				</Button>
-				<Button
-					type="button"
-					small
-					sort={amountSortingOrder}
-					onClick={onAmountSort}
-				>
+				<Button small sort={amountSortingOrder} onClick={onAmountSort}>
 					По сумме
 				</Button>
 			</SearchPanel>
-			<Form title="Клиенты:" className={styles.usersForm}>
-				<UsersTitle />
+			<Form
+				title="Клиенты:"
+				className={styles.usersForm}
+				errorMessage={errorMessage}
+			>
+				{usersToDisplay.length !== 0 && <UsersTitle />}
 
 				{usersToDisplay.map(({ id, login, statusId, amount }, i) => (
 					<UserItem
 						key={id}
+						userId={id}
 						num={i + 1}
 						login={login}
-						statusId={statusId}
-						amount={amount}
+						loadedStatusId={statusId}
+						loadedAmount={amount}
 						statuses={statuses}
 					/>
 				))}

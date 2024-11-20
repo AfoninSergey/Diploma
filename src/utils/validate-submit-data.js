@@ -1,4 +1,4 @@
-import { ERROR_MESSAGE } from './constants';
+import { ERROR_MESSAGE } from '../constants';
 
 export const validateSubmitData = (login, password, repeatPassword, isReg) => {
 	let error = null;

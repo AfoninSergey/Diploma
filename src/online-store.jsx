@@ -3,7 +3,6 @@ import { Header } from './components';
 import { AuthorizeAndRegister, Users } from './pages';
 import styles from './online-store.module.css';
 
-// const Content = ({ children }) => <div>{children}</div>; // TODO удали
 const Main = () => (
 	<main>
 		<h1>Main page</h1>

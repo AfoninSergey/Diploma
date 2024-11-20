@@ -8,14 +8,14 @@ export const authorize = async (authLogin, authPassword) => {
 
 	if (!user) {
 		return {
-			error: 'Такой пользователь не найден',
+			error: 'Такой пользователь не найден!',
 			response: null,
 		};
 	}
 
 	if (user.password !== authPassword) {
 		return {
-			error: 'Неверный пароль',
+			error: 'Неверный пароль!',
 			response: null,
 		};
 	}

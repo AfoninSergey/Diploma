@@ -1,4 +1,4 @@
-import { ERROR_MESSAGE, REG_EXP } from './constants';
+import { ERROR_MESSAGE, REG_EXP } from '../constants';
 
 export const validateLogin = (value) => {
 	let error = null;

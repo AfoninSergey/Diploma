@@ -21,7 +21,7 @@ export const Header = () => {
 					to="/login"
 					onClick={() => dispatch(RESET_AUTH_AND_REG_FORM_ERROR)}
 				>
-					<Button type="button">Вход</Button>
+					<Button>Вход</Button>
 				</Link>
 			)}
 		</header>
