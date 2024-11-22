@@ -84,14 +84,14 @@ export const UserItem = ({
 				} else if (!response) {
 					dispatch(setServerError(ERROR_MESSAGE.SERVER));
 				} else {
-					dispatch(UPDATE_USERS_TRIGGER)
+					dispatch(UPDATE_USERS_TRIGGER);
 				}
 			},
 		);
 	};
 
 	const isCancelButtonDisabled =
-		(initialStatusId === userStatusId && +initialAmount === +usersAmount)
+		initialStatusId === userStatusId && +initialAmount === +usersAmount;
 	const isSaveButtonDisabled =
 		(initialStatusId === userStatusId && +initialAmount === +usersAmount) ||
 		usersAmount.length === 0 ||
@@ -119,18 +119,22 @@ export const UserItem = ({
 				onChange={onUserAmountChange}
 			/>
 			<Button
+				addClass="cancelButton"
 				disabled={isCancelButtonDisabled}
 				title="Отменить изменения"
-				cancel
 				onClick={onCancel}
 			/>
 			<Button
+				addClass="saveButton"
 				disabled={isSaveButtonDisabled}
 				title="Сохранить изменения"
-				save
 				onClick={onUserDataSave}
 			/>
-			<Button title="Удалить пользователя" del onClick={onUserDelete} />
+			<Button
+				addClass="deleteButton"
+				title="Удалить пользователя"
+				onClick={onUserDelete}
+			/>
 		</div>
 	);
 };

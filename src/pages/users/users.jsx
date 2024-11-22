@@ -21,13 +21,12 @@ import { ERROR_MESSAGE, SORTING_ORDER } from '../../constants';
 import styles from './users.module.css';
 import { useServerRequest } from '../../hooks';
 
-
 export const Users = () => {
 	const statuses = useSelector(selectStatuses);
 	const accessError = useSelector(selectAccessError);
 	const users = useSelector(selectUsers);
 	const serverError = useSelector(selectServerError);
-	const trigger = useSelector(selectUpdateUsersTrigger)
+	const trigger = useSelector(selectUpdateUsersTrigger);
 
 	const [usersToDisplay, setUsersToDisplay] = useState(users);
 	const [searchString, setSearchString] = useState('');
@@ -42,7 +41,6 @@ export const Users = () => {
 	const requestServer = useServerRequest();
 
 	useEffect(() => {
-		console.log('useEffect')
 		requestServer('fetchUsers').then((loadedUsers) => {
 			dispatch(setAccessError(loadedUsers.error));
 
@@ -110,11 +108,11 @@ export const Users = () => {
 
 	return (
 		<section className={styles.users}>
-			<SearchPanel value={searchString} onChange={onSearchString}>
-				<Button small sort={alphabetSortingOrder} onClick={onAlphabetSort}>
+			<SearchPanel placeholder="Найти клиента..." value={searchString} onChange={onSearchString}>
+				<Button addClass='smallButton' sort={alphabetSortingOrder} onClick={onAlphabetSort}>
 					По алфавиту
 				</Button>
-				<Button small sort={amountSortingOrder} onClick={onAmountSort}>
+				<Button addClass='smallButton' sort={amountSortingOrder} onClick={onAmountSort}>
 					По сумме
 				</Button>
 			</SearchPanel>

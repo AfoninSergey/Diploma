@@ -1,26 +1,13 @@
+import { SORTING_ORDER } from '../../constants';
 import styles from './button.module.css';
 
-export const Button = ({
-	type,
-	children,
-	small,
-	save,
-	del,
-	cancel,
-	gray,
-	sort,
-	...props
-}) => (
+export const Button = ({ addClass, type, children, sort, ...props }) => (
 	<button
 		className={`
 			${styles.button}
-			${sort === 1 ? styles.up : ''}
-			${sort === 2 ? styles.down : ''}
-			${small ? styles.smallButton : ''}
-			${save ? styles.saveButton : ''}
-			${del ? styles.deleteButton : ''}
-			${del ? styles.deleteButton : ''}
-			${cancel ? styles.cancelButton : ''}
+			${styles[addClass]}
+			${sort === SORTING_ORDER.DESCENDING ? styles.up : ''}
+			${sort === SORTING_ORDER.ASCENDING ? styles.down : ''}
 			`}
 		{...props}
 		type={type || 'button'}

@@ -1,7 +1,7 @@
 import { Input } from '../input/input';
 import styles from './search-panel.module.css';
 
-export const SearchPanel = ({ children, value, onChange }) => (
+export const SearchPanel = ({ children, placeholder, value, onChange }) => (
 	<section className={styles.searchPanel}>
 		<Input
 			id="search"
@@ -13,7 +13,7 @@ export const SearchPanel = ({ children, value, onChange }) => (
 				/>
 			}
 			type="text"
-			placeholder="Найти клиента..."
+			placeholder={placeholder}
 			className={styles.searchInput}
 			value={value}
 			onChange={onChange}

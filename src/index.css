@@ -1,6 +1,11 @@
 * {
 	box-sizing: border-box;
 }
+html,
+#root {
+	min-height: 100%;
+}
+
 body {
 	margin: 0;
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -9,27 +14,21 @@ body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 
-
-	background-image: url(../public/pictures/bg/bgbw.png),url(../public/pictures/bg/bg.jpg);
-    background-position-x: right, center;
-    background-position-y: -30px, top;
+	background-image: url(../public/pictures/bg/bgbw.png),
+		url(../public/pictures/bg/bg.jpg);
+	background-position-x: right, center;
+	background-position-y: -30px, top;
 	background-size: /* 1270px 695px */ 80%, contain;
-    background-repeat: no-repeat, no-repeat;
-    background-color: rgb(218, 189, 148);
+	background-repeat: no-repeat, no-repeat;
+	background-color: rgb(218, 189, 148);
 
-
-
-height: 5000px;
+	min-height: 900px;
 }
 
-html,
-body,
-#root {
-	min-height: 100%;
-}
 a {
 	text-decoration: none;
-};
+}
+
 .noScroll {
 	overflow: hidden;
 	padding-right: 15px;

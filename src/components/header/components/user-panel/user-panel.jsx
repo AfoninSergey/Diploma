@@ -40,7 +40,7 @@ export const UserPanel = () => {
 					<div className={styles.vip}>vip</div>
 				)}
 			</div>
-			<Button small onClick={onLogout}>
+			<Button addClass='smallButton' onClick={onLogout}>
 				Выйти
 			</Button>
 		</div>
