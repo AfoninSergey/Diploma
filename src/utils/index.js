@@ -8,4 +8,7 @@ export * from './sort-by-number';
 export * from './sort-by-alphabet';
 export * from './get-zeros';
 export * from './get-appropriate-amount';
-export * from './get-appropriate-status-id'
+export * from './get-appropriate-status-id';
+export * from './get-pagination-data';
+export * from './get-combine-name';
+export * from './filter-parts-by-combine'

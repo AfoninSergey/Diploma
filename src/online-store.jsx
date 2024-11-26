@@ -19,14 +19,7 @@ export const OnlineStore = () => (
 					</div>
 				}
 			/>
-			<Route
-				path="/parts"
-				element={
-					<div>
-						<h2>Part list</h2>
-					</div>
-				}
-			/>
+			<Route path="/parts" element={<Main />}/>
 			<Route
 				path="/part/:id"
 				element={

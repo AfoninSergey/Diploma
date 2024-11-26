@@ -13,4 +13,6 @@ export * from './reset-auth-and-reg-form-error';
 export * from './set-access-error';
 export * from './save-user-data-async';
 export * from './remove-user-async';
-export * from './update-users-trigger'
+export * from './update-users-trigger';
+export * from './set-combines';
+export * from './set-parts';

@@ -18,6 +18,6 @@ export const SearchPanel = ({ children, placeholder, value, onChange }) => (
 			value={value}
 			onChange={onChange}
 		/>
-		<div className={styles.sortingBlock}>{children}</div>
+		{children && <div className={styles.sortingBlock}>{children}</div>}
 	</section>
 );

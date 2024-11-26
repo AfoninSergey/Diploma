@@ -13,7 +13,7 @@ import {
 const reducer = combineReducers({
 	app: appReducer,
 	cart: cartReducer,
-	combine: combinesRducer,
+	combines: combinesRducer,
 	parts: partsReducer,
 	user: userReduser,
 	users: usersRsducer,
