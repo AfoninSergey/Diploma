@@ -13,7 +13,7 @@ import {
 	sortByNumber,
 } from '../../utils';
 import { useServerRequest } from '../../hooks';
-import { setCombines, setParts } from '../../actions';
+import { loadCombinesAsync, loadPartsAsync } from '../../actions';
 import styles from './main.module.css';
 
 export const Main = () => {
@@ -34,14 +34,11 @@ export const Main = () => {
 	const isCombinesAndParts = !!useMatch('/parts');
 
 	useEffect(() => {
-		requestServer('fetchCombines').then(({ response }) =>
-			dispatch(setCombines(response)),
-		);
+		dispatch(loadCombinesAsync(requestServer));
 
-		requestServer('fetchParts').then(({ response }) => {
-			dispatch(setParts(response));
-			setPartsToDisplay(response);
-		});
+		dispatch(loadPartsAsync(requestServer)).then((response) =>
+			setPartsToDisplay(response),
+		);
 	}, [requestServer, dispatch]);
 
 	const resetSelectionCriteria = () => {
@@ -54,13 +51,10 @@ export const Main = () => {
 
 	useEffect(() => {
 		if (!isCombinesAndParts) {
-			resetSelectionCriteria()
-			console.log('TEST')
+			resetSelectionCriteria();
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isCombinesAndParts])
-
-
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isCombinesAndParts]);
 
 	const onSelectCombain = (id) => {
 		if (!isCombinesAndParts) {
@@ -155,7 +149,7 @@ export const Main = () => {
 					)}
 				</SearchPanel>
 				{!isCombinesAndParts && (
-					<Link to={'/parts'} onClick={resetSelectionCriteria}>
+					<Link to={'/parts'}>
 						<Button
 							addClass="smallButton"
 							sort={SORTING_ORDER.DESCENDING}
@@ -185,7 +179,7 @@ export const Main = () => {
 						<ul className={styles.partsList}>
 							{partsList.length === 0 && (
 								<div className={styles.infoBlock}>
-									Запчасти, по заданным критериям, не найдены...
+									По заданным критериям, запчасти не найдены...
 								</div>
 							)}
 							{partsList.map(({ id, ...props }) => (

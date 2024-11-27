@@ -1,5 +1,6 @@
 import { URL } from '../constants';
 import { transformUser } from '../transformers';
+import { getZeros } from '../utils';
 
 export const setUserData = (userId, statusId, amount) =>
 	// fetch(`${URL.USERS}/${userId}test server error`, { //Тест ошибки сервера TODO
@@ -10,7 +11,7 @@ export const setUserData = (userId, statusId, amount) =>
 		},
 		body: JSON.stringify({
 			status_id: statusId,
-			amount: amount || '0',
+			amount: getZeros(amount),
 		}),
 	})
 		.then((response) => response.json())

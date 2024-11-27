@@ -22,7 +22,7 @@ export const CombainItem = ({
 			/>
 		</div>
 		<div className={styles.combineName}>
-			{!isCombinesAndParts ? 'Комбайн ' : ''}"{name}"
+			{!isCombinesAndParts || id === selectedCombine ? 'Комбайн ' : ''}"{name}"
 		</div>
 	</li>
 );

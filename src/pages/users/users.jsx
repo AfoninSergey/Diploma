@@ -9,7 +9,7 @@ import {
 	selectUpdateUsersTrigger,
 	selectUsers,
 } from '../../selectors';
-import { setAccessError, setUsers } from '../../actions';
+import { loadUsersAsync } from '../../actions';
 import { ErrorPage } from '../error-page/error-page';
 import {
 	getCurrentSortingOrder,
@@ -41,12 +41,9 @@ export const Users = () => {
 	const requestServer = useServerRequest();
 
 	useEffect(() => {
-		requestServer('fetchUsers').then((loadedUsers) => {
-			dispatch(setAccessError(loadedUsers.error));
-
-			if (!accessError && loadedUsers.response !== null) {
-				dispatch(setUsers(loadedUsers.response));
-				setUsersToDisplay(loadedUsers.response);
+		dispatch(loadUsersAsync(requestServer, accessError)).then((response) => {
+			if (response !== undefined) {
+				setUsersToDisplay(response);
 			}
 		});
 	}, [requestServer, dispatch, accessError, trigger]);
@@ -108,11 +105,23 @@ export const Users = () => {
 
 	return (
 		<section className={styles.users}>
-			<SearchPanel placeholder="Найти клиента..." value={searchString} onChange={onSearchString}>
-				<Button addClass='smallButton' sort={alphabetSortingOrder} onClick={onAlphabetSort}>
+			<SearchPanel
+				placeholder="Найти клиента..."
+				value={searchString}
+				onChange={onSearchString}
+			>
+				<Button
+					addClass="smallButton"
+					sort={alphabetSortingOrder}
+					onClick={onAlphabetSort}
+				>
 					По алфавиту
 				</Button>
-				<Button addClass='smallButton' sort={amountSortingOrder} onClick={onAmountSort}>
+				<Button
+					addClass="smallButton"
+					sort={amountSortingOrder}
+					onClick={onAmountSort}
+				>
 					По сумме
 				</Button>
 			</SearchPanel>
