@@ -15,7 +15,7 @@
 
 .searchBlock a::before {
 	position: absolute;
-	content: 'Раскрыть';
+	content: 'Раскрыть:';
 	top: -34px;
 	left: 7px;
 	font-size: 14px;

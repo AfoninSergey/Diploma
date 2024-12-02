@@ -6,3 +6,5 @@ export * from './form/form';
 export * from './loader/loader';
 export * from './search-panel/search-panel';
 export * from './pagination/pagination';
+export * from './cart/cart';
+export * from './part-price/part-price';

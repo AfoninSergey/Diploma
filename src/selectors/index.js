@@ -13,3 +13,7 @@ export * from './select-users';
 export * from './select-update-users-trigger.js';
 export * from './select-combines.js';
 export * from './select-parts.js';
+export * from './select-part.js';
+export * from './select-total-number.js';
+export * from './select-total-amount.js';
+

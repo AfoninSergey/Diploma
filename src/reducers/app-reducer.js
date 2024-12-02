@@ -11,7 +11,7 @@ const initialAppState = {
 	serverError: null,
 	accessError: ERROR_MESSAGE.ACCESS,
 	isLoading: true,
-	updateUsersTrigger: false,
+	updateUsersTrigger: false
 };
 export const appReducer = (state = initialAppState, { type, payload }) => {
 	switch (type) {

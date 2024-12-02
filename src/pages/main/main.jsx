@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link, useMatch, useNavigate } from 'react-router-dom';
 import { selectCombines, selectParts } from '../../selectors';
 import { Button, Pagination, SearchPanel } from '../../components';
@@ -12,8 +12,7 @@ import {
 	search,
 	sortByNumber,
 } from '../../utils';
-import { useServerRequest } from '../../hooks';
-import { loadCombinesAsync, loadPartsAsync } from '../../actions';
+
 import styles from './main.module.css';
 
 export const Main = () => {
@@ -29,32 +28,11 @@ export const Main = () => {
 		SORTING_ORDER.NOT_APPLIED,
 	);
 
-	const requestServer = useServerRequest();
-	const dispatch = useDispatch();
 	const isCombinesAndParts = !!useMatch('/parts');
 
 	useEffect(() => {
-		dispatch(loadCombinesAsync(requestServer));
-
-		dispatch(loadPartsAsync(requestServer)).then((response) =>
-			setPartsToDisplay(response),
-		);
-	}, [requestServer, dispatch]);
-
-	const resetSelectionCriteria = () => {
-		setCurrentPage(1);
-		setPartsToDisplay(parts);
-		setSearchString('');
-		setSelectedCombine('');
-		setPriceSortingOrder(SORTING_ORDER.NOT_APPLIED);
-	};
-
-	useEffect(() => {
-		if (!isCombinesAndParts) {
-			resetSelectionCriteria();
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isCombinesAndParts]);
+		setPartsToDisplay(parts)
+	}, [parts])
 
 	const onSelectCombain = (id) => {
 		if (!isCombinesAndParts) {
@@ -154,7 +132,7 @@ export const Main = () => {
 							addClass="smallButton"
 							sort={SORTING_ORDER.DESCENDING}
 						>
-							ВСЕ ЗАПЧАСТИ
+							СПИСОК ЗАПЧАСТЕЙ
 						</Button>
 					</Link>
 				)}

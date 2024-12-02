@@ -1,0 +1,16 @@
+.cart {
+	display: flex;
+	justify-content: space-between;
+	padding: 15px 50px;
+	background-color: #f5f5f5;
+	border-radius: 10px;
+}
+
+.cart img {
+	order: 1;
+}
+
+.content {
+	font-size: 35px;
+	line-height: 65px;
+}
