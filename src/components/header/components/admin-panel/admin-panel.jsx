@@ -1,17 +1,21 @@
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button } from '../../../button/button';
-import { LOGOUT } from '../../../../actions';
+import { LOGOUT, RESET_CART } from '../../../../actions';
 import { useServerRequest } from '../../../../hooks';
 import styles from './admin-panel.module.css';
 
 export const AdminPanel = () => {
 	const dispatch = useDispatch();
-	const requestServer = useServerRequest()
+	const requestServer = useServerRequest();
 
 	const onLogout = () => {
-		requestServer('logout')
+		requestServer('logout');
 		dispatch(LOGOUT);
+		dispatch(RESET_CART);
+		sessionStorage.removeItem('currentUserData');
+		sessionStorage.removeItem('currentUserCartData');
+		sessionStorage.removeItem('loadedStatuses');
 	};
 
 	return (

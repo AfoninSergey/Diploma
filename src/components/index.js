@@ -8,3 +8,4 @@ export * from './search-panel/search-panel';
 export * from './pagination/pagination';
 export * from './cart/cart';
 export * from './part-price/part-price';
+export * from './error-label/error-label';

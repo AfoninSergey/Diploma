@@ -1,0 +1,22 @@
+import { setCartData } from '../api';
+import { ROLE } from '../constants';
+import { sessions } from '../sessions';
+
+export const updateCartData = async (userSession, cartData) => {
+	const accessRoles = [ROLE.ADMIN, ROLE.CLIENT];
+	const access = await sessions.access(userSession, accessRoles);
+
+	if (!access) {
+		return {
+			error: 'Ошибка! Вы не авторизованы! Для добавления товаров в корзину, войдите в свою учетную запись!',
+			response: null,
+		};
+	}
+
+	const updatedCart = await setCartData(cartData);
+
+	return {
+		error: null,
+		response: updatedCart,
+	};
+};

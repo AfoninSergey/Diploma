@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux';
 import styles from './cart.module.css';
-import { selectTotalAmount, selectTotalNumber } from '../../selectors';
+import { selectCartTotalAmount, selectCartTotalNumber } from '../../selectors';
 
 export const Cart = () => {
-	const totalNumber = useSelector(selectTotalNumber);
-	const totalAmount = useSelector(selectTotalAmount);
+	const cartTotalNumber = useSelector(selectCartTotalNumber);
+	const cartTotalAmount = useSelector(selectCartTotalAmount);
 	return (
 		<div className={styles.cart}>
 			<img
@@ -15,11 +15,11 @@ export const Cart = () => {
 			/>
 			<div className={styles.content}>
 				<div className={styles.totalNumber}>
-					Итого: <b>{totalNumber}</b> шт.
+					Итого: <b>{cartTotalNumber}</b> шт.
 				</div>
 
 				<div className={styles.totalAmount}>
-					Общая сумма: <b>{totalAmount}</b> р. с НДС
+					Общая сумма: <b>{cartTotalAmount}</b> р. с НДС
 				</div>
 			</div>
 		</div>

@@ -5,7 +5,7 @@ import { sessions } from '../sessions';
 export const updateUserData = async (userSession, userId, statusId, amount) => {
 	// const accessRoles = [777]; //Тест доступа TODO
 	const accessRoles = [ROLE.ADMIN];
-	const access = sessions.access(userSession, accessRoles);
+	const access = await sessions.access(userSession, accessRoles);
 
 	if (!access) {
 		return {

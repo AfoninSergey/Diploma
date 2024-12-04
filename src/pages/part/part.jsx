@@ -1,26 +1,39 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useServerRequest } from '../../hooks';
-import { Button, Cart, Input, PartPrice } from '../../components';
-import { getCombineName, getZeros, setNoScroll } from '../../utils';
-import { selectCombines, selectPart } from '../../selectors';
+import { useCartData, useServerRequest } from '../../hooks';
+import { Button, Cart, ErrorLabel, Input, PartPrice } from '../../components';
+import {
+	getCombineName,
+	getCurrentQuantity,
+	getZeros,
+	setNoScroll,
+} from '../../utils';
+import { selectCartParts, selectCombines, selectPart } from '../../selectors';
 import { PART_PLUG } from '../../constants';
 import styles from './part.module.css';
+import { addToCartAsync } from '../../actions';
 
 export const Part = () => {
 	const { id } = useParams();
-	const navigate = useNavigate()
-	const dispatch = useDispatch()
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
 	const combines = useSelector(selectCombines);
-	const requestServer = useServerRequest
+	const { imageUrl, article, name, combineId, price, quantity } =
+		useSelector(selectPart(id)) || PART_PLUG;
+	const cartParts = useSelector(selectCartParts);
 
-	const { imageUrl, article, name, combineId, quantity, price } = useSelector(
-		selectPart(id),
-	) || PART_PLUG;
+	const currentQuantity = getCurrentQuantity(quantity, cartParts, id);
 
+	const [errorMessage, setErrorMesage] = useState(null);
 	const [openImage, setOpenImage] = useState(false);
 	const [quantityValue, setQuantityValue] = useState('1');
+
+	const requestServer = useServerRequest();
+	const cartData = useCartData(id, quantityValue);
+
+	// const currentQuantity = cartData?
 
 	const onOpenImage = () => {
 		setOpenImage(!openImage);
@@ -34,8 +47,8 @@ export const Part = () => {
 			value = quantityValue;
 		}
 
-		if (+value > quantity) {
-			value = `${quantity}`;
+		if (+value > currentQuantity) {
+			value = `${currentQuantity}`;
 		}
 
 		setQuantityValue(value);
@@ -48,21 +61,30 @@ export const Part = () => {
 	};
 
 	const onIncrQuantity = () => {
-		if (+quantityValue < quantity) {
+		if (+quantityValue < currentQuantity) {
 			setQuantityValue(+quantityValue + 1);
 		}
 	};
 	const onDecrQuantity = () => {
-		console.log('+quantityValue', +quantityValue);
-
 		if (+quantityValue > 1) {
 			setQuantityValue(quantityValue - 1);
 		}
 	};
 
 	const onAddToCart = () => {
-		dispatch()
-	}
+		dispatch(addToCartAsync(requestServer, cartData)).then((error) => {
+			setErrorMesage(error);
+
+			if (!error) {
+				sessionStorage.setItem(
+					'currentUserCartData',
+					JSON.stringify(cartData),
+				);
+				setQuantityValue('1')
+			}
+
+		});
+	};
 
 	const combineName =
 		combines.length !== 0 ? getCombineName(combines, combineId) : '';
@@ -72,6 +94,7 @@ export const Part = () => {
 			<Cart />
 
 			<div className={styles.partBlock}>
+				{errorMessage && <ErrorLabel>{errorMessage}</ErrorLabel>}
 				<div className={styles.leftSide}>
 					<div
 						className={`${styles.partImage} ${openImage ? styles.active : ''}`}
@@ -93,25 +116,36 @@ export const Part = () => {
 						<span className={styles.partName}>{name}</span>
 						<b> "{combineName}"</b>
 					</div>
-					<div className={styles.partQuantity}>
-						<Input
-							className={styles.quantityBig}
-							label={`В наличии: ${quantity}`}
-							value={quantityValue}
-							onChange={onQuantityValueChange}
-							onBlur={onQuantityValueBlur}
-						/>
-						<button className={styles.arrowUp} onClick={onIncrQuantity}>
-							▲
-						</button>
-						<button
-							className={styles.arrowDown}
-							onClick={onDecrQuantity}
-						>
-							▼
-						</button>
-						<div>Количество</div>
-					</div>
+
+					{currentQuantity === 0 ? (
+						<div className={styles.partMaximum}>
+							Вы добавили в корзину максимум из наличия!
+						</div>
+					) : (
+						<div className={styles.partQuantity}>
+							<Input
+								className={styles.quantityBig}
+								label={`В наличии: ${currentQuantity}`}
+								value={quantityValue}
+								onChange={onQuantityValueChange}
+								onBlur={onQuantityValueBlur}
+							/>
+							<button
+								className={styles.arrowUp}
+								onClick={onIncrQuantity}
+							>
+								▲
+							</button>
+							<button
+								className={styles.arrowDown}
+								onClick={onDecrQuantity}
+							>
+								▼
+							</button>
+							<div>Количество</div>
+						</div>
+					)}
+
 					<PartPrice
 						addClass="totalAmount"
 						price={getZeros(+price * quantityValue)}
@@ -119,7 +153,9 @@ export const Part = () => {
 					/>
 					<div className={styles.partButtons}>
 						<Button onClick={() => navigate(-1)}>НАЗАД</Button>
-						<Button>Добавить в корзину</Button>
+						<Button disabled={errorMessage || currentQuantity === 0} onClick={onAddToCart}>
+							Добавить в корзину
+						</Button>
 					</div>
 				</div>
 			</div>

@@ -1,4 +1,4 @@
-import { getStatuses, getUser } from '../api';
+import { getCart, getStatuses, getUser } from '../api';
 import { ROLE } from '../constants';
 import { sessions } from '../sessions';
 import { calculateUserStatus } from '../utils';
@@ -22,9 +22,11 @@ export const authorize = async (authLogin, authPassword) => {
 
 	delete user.password;
 
-
-	const statuses = await getStatuses();
-	const session = sessions.create(user.roleId);
+	const [cartFromServer, statuses] = await Promise.all([
+		getCart(user.id),
+		getStatuses(),
+	]);
+	const session = await sessions.create(user.roleId);
 
 	if (user.roleId === ROLE.ADMIN)
 		return {
@@ -42,6 +44,7 @@ export const authorize = async (authLogin, authPassword) => {
 		response: {
 			loadedUser: { ...user, session, status: userStatus },
 			loadedStatuses: statuses,
+			cart: cartFromServer,
 		},
 	};
 };

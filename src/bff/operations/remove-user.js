@@ -4,7 +4,7 @@ import { sessions } from '../sessions';
 
 export const removeUser = async (userSession, userIdForDelete) => {
 	const accessRoles = [ROLE.ADMIN];
-	const access = sessions.access(userSession, accessRoles);
+	const access = await sessions.access(userSession, accessRoles);
 
 	if (!access) {
 		return {

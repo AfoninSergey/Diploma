@@ -1,1 +1,0 @@
-export const selectTotalNumber = ({cart}) => cart.totalNumber

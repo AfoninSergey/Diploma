@@ -3,8 +3,8 @@ import { ROLE } from '../constants';
 import { sessions } from '../sessions';
 
 export const fetchUsers = async (userSession) => {
-	const accessRoles = [ROLE.ADMIN]
-	const access = sessions.access(userSession, accessRoles)
+	const accessRoles = [ROLE.ADMIN];
+	const access = await sessions.access(userSession, accessRoles);
 
 	if (!access) {
 		return {

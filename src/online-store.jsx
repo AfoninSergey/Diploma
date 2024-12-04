@@ -1,20 +1,40 @@
-import { Route, Routes } from 'react-router-dom';
-import { Header } from './components';
-import { AuthorizeAndRegister, Main, Part, Users } from './pages';
-import styles from './online-store.module.css';
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { loadCombinesAsync, loadPartsAsync } from './actions';
+import { Route, Routes } from 'react-router-dom';
 import { useServerRequest } from './hooks';
+import { AuthorizeAndRegister, Main, Part, Users } from './pages';
+import { Header } from './components';
+import {
+	loadCombinesAsync,
+	loadPartsAsync,
+	setCart,
+	setStatuses,
+	setUser,
+} from './actions';
+import styles from './online-store.module.css';
 
 export const OnlineStore = () => {
-	const dispatch = useDispatch()
-	const requestServer = useServerRequest()
+	const dispatch = useDispatch();
+	const requestServer = useServerRequest();
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		dispatch(loadCombinesAsync(requestServer));
+		dispatch(loadPartsAsync(requestServer));
 
-		dispatch(loadPartsAsync(requestServer))
+		const currentUserDataJSON = sessionStorage.getItem('currentUserData');
+		const loadedStatusesJSON = sessionStorage.getItem('loadedStatuses');
+		const currentUserCartDataJSON =
+			sessionStorage.getItem('currentUserCartData');
+
+		if (currentUserDataJSON) {
+			dispatch(setUser(JSON.parse(currentUserDataJSON)));
+		}
+		if (currentUserCartDataJSON) {
+			dispatch(setCart(JSON.parse(currentUserCartDataJSON)));
+		}
+		if (loadedStatusesJSON) {
+			dispatch(setStatuses(JSON.parse(loadedStatusesJSON)));
+		}
 	}, [requestServer, dispatch]);
 
 	return (

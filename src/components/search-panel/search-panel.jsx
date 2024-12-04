@@ -8,7 +8,7 @@ export const SearchPanel = ({ children, placeholder, value, onChange }) => (
 			label={
 				<img
 					src="./pictures/icons/search.png"
-					alt=""
+					alt="🔍"
 					className={styles.searchImage}
 				/>
 			}

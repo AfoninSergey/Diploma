@@ -14,3 +14,4 @@ export * from './get-combine-name';
 export * from './filter-parts-by-combine';
 export * from './get-discounted-price';
 export * from './set-no-scroll';
+export * from './get-current-quantity';

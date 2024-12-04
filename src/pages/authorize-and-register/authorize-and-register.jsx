@@ -13,6 +13,8 @@ import {
 	setRepeatPasswordValue,
 	RESET_AUTH_AND_REG_FORM,
 	RESET_AUTH_AND_REG_FORM_ERROR,
+	setCart,
+	RESET_CART,
 } from '../../actions';
 import {
 	selectUserLogin,
@@ -47,6 +49,10 @@ export const AuthorizeAndRegister = () => {
 	const onLogout = () => {
 		requestServer('logout');
 		dispatch(LOGOUT);
+		dispatch(RESET_CART);
+		sessionStorage.removeItem('currentUserData');
+		sessionStorage.removeItem('currentUserCartData');
+		sessionStorage.removeItem('loadedStatuses');
 	};
 
 	const onLoginChange = ({ target: { value } }) => {
@@ -100,7 +106,22 @@ export const AuthorizeAndRegister = () => {
 				dispatch(setServerError(`Ошибка запроса! ${error}`));
 			} else {
 				dispatch(setUser(response.loadedUser));
+				sessionStorage.setItem(
+					'currentUserData',
+					JSON.stringify(response.loadedUser),
+				);
 				dispatch(setStatuses(response.loadedStatuses));
+				sessionStorage.setItem(
+					'loadedStatuses',
+					JSON.stringify(response.loadedStatuses),
+				);
+				if (Object.keys(response.cart).length !== 0) {
+					dispatch(setCart(response.cart));
+					sessionStorage.setItem(
+						'currentUserCartData',
+						JSON.stringify(response.cart),
+					);
+				}
 				dispatch(RESET_AUTH_AND_REG_FORM);
 				navigate('/');
 			}

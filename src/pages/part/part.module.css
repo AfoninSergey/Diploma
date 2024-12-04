@@ -4,16 +4,8 @@
 	margin: 0 auto;
 }
 
-.partBack {
-	position: absolute;
-	height: 20px;
-	cursor: pointer;
-	font-size: 90px;
-	right: 0;
-	top: 175px;
-	transform: rotate(180deg);
-}
 .partBlock {
+	position: relative;
 	display: flex;
 	column-gap: 55px;
 	margin-top: 40px;
@@ -86,7 +78,7 @@
 }
 
 .partArticle {
-	font-size: 29px;
+	font-size: 27px;
 	text-align: center;
 	padding-top: 40px;
 }
@@ -127,12 +119,25 @@
 	line-height: 25px;
 }
 
-.arrowUp {top: 38px; }
-.arrowDown {bottom: 52px; }
+.arrowUp {
+	top: 38px;
+}
+.arrowDown {
+	bottom: 52px;
+}
 
 .partQuantity div {
 	font-size: 35px;
 }
+
+.partMaximum {
+	font-size: 35px;
+	height: 170px;
+	font-style: italic;
+	color: rgb(84, 137, 51);
+	padding: 0 40px;
+}
+
 .partAmount {
 	font-size: 38px;
 	margin-top: 35px;
