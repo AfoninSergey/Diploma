@@ -11,7 +11,13 @@ const initialAppState = {
 	serverError: null,
 	accessError: ERROR_MESSAGE.ACCESS,
 	isLoading: true,
-	updateUsersTrigger: false
+	updateUsersTrigger: false,
+	modal: {
+		isOpen: false,
+		restText: '',
+		onConfirm: () => {},
+		onCancel: () => {},
+	},
 };
 export const appReducer = (state = initialAppState, { type, payload }) => {
 	switch (type) {
@@ -61,9 +67,7 @@ export const appReducer = (state = initialAppState, { type, payload }) => {
 		case ACTION_TYPE.RESET_AUTH_AND_REG_FORM:
 			return {
 				...state,
-				authAndRegForm: {
-					...initialAppState.authAndRegForm,
-				},
+				authAndRegForm: initialAppState.authAndRegForm,
 			};
 		case ACTION_TYPE.RESET_AUTH_AND_REG_FORM_ERROR:
 			return {
@@ -83,6 +87,21 @@ export const appReducer = (state = initialAppState, { type, payload }) => {
 			return {
 				...state,
 				updateUsersTrigger: !state.updateUsersTrigger,
+			};
+		case ACTION_TYPE.OPEN_MODAL:
+			return {
+				...state,
+				modal: {
+					...initialAppState.modal,
+					isOpen: true,
+					restText: payload.text,
+					onConfirm: payload.onConfirm,
+				},
+			};
+		case ACTION_TYPE.CLOSE_MODAL:
+			return {
+				...state,
+				modal: initialAppState.modal,
 			};
 		default:
 			return state;

@@ -37,6 +37,7 @@ export const AdminPanel = () => {
 			</div>
 
 			<Button onClick={onLogout}>Выйти</Button>
+			
 		</div>
 	);
 };

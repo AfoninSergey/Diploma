@@ -11,7 +11,7 @@ import {
 import { PART_PLUG } from '../constants';
 import { getDiscountedPrice, getZeros } from '../utils';
 
-export const useCartData = (partId, quantityValue) => {
+export const useCartDataToAdd = (partId, quantityValue) => {
 	const { id, imageUrl, article, name, combineId, price } =
 		useSelector(selectPart(partId)) || PART_PLUG;
 	const userId = useSelector(selectUserId);
@@ -46,7 +46,6 @@ export const useCartData = (partId, quantityValue) => {
 					price: getZeros(totalAmount),
 				},
 			];
-
 
 	return {
 		id: userId,

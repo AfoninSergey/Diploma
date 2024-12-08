@@ -18,4 +18,7 @@ export * from './select-cart-total-number.js';
 export * from './select-cart-total-amount.js';
 export * from './select-user-id.js';
 export * from './select-cart-data-on-server.js';
-export * from './select-cart-parts.js'
+export * from './select-cart-parts.js';
+export * from './select-modal-is-open.js';
+export * from './select-modal-on-confirm.js';
+export * from './select-modal-rest-text.js';

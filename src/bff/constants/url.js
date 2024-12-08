@@ -5,5 +5,5 @@ export const URL = {
 	COMBINES: 'http://localhost:3005/combines',
 	PARTS: 'http://localhost:3005/parts',
 	SESSIONS: 'http://localhost:3005/sessions',
-	CART: 'http://localhost:3005/cart',
+	CART_DATA: 'http://localhost:3005/cart',
 };

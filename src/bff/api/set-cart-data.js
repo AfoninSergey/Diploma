@@ -1,11 +1,11 @@
 import { URL } from '../constants';
 
 export const setCartData = (cartData) => {
-
-	const url = cartData.cartDataOnServer ? `${URL.CART}/${cartData.id}` : URL.CART;
+	const url = cartData.cartDataOnServer
+		? `${URL.CART_DATA}/${cartData.id}`
+		: URL.CART_DATA;
 	const method = cartData.cartDataOnServer ? 'PUT' : 'POST';
 
-	// fetch(`${URL.USERS}/${userId}test server error`, { //Тест ошибки сервера TODO
 	return fetch(url, {
 		method,
 		headers: {

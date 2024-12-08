@@ -1,4 +1,4 @@
 import { URL } from '../constants';
 
 export const getCart = (cartId) =>
-	fetch(`${URL.CART}/${cartId}`).then((response) => response.json());
+	fetch(`${URL.CART_DATA}/${cartId}`).then((response) => response.json());

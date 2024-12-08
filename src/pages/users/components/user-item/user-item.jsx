@@ -5,8 +5,10 @@ import {
 	getAppropriateAmount,
 	getAppropriateStatusId,
 	getZeros,
+	setNoScroll,
 } from '../../../../utils';
 import {
+	openModal,
 	removeUserAsync,
 	saveUserDataAsync,
 	setServerError,
@@ -75,7 +77,7 @@ export const UserItem = ({
 		});
 	};
 
-	const onUserDelete = () => {
+	const onUserRemove = () => {
 		dispatch(setServerError(null));
 		dispatch(removeUserAsync(requestServer, userId)).then(
 			({ error, response }) => {
@@ -87,6 +89,16 @@ export const UserItem = ({
 					dispatch(UPDATE_USERS_TRIGGER);
 				}
 			},
+		);
+	};
+
+	const onOpenModal = () => {
+		setNoScroll(true);
+		dispatch(
+			openModal({
+				text: 'данного клиента',
+				onConfirm: onUserRemove,
+			}),
 		);
 	};
 
@@ -133,7 +145,7 @@ export const UserItem = ({
 			<Button
 				addClass="deleteButton"
 				title="Удалить пользователя"
-				onClick={onUserDelete}
+				onClick={onOpenModal}
 			/>
 		</div>
 	);

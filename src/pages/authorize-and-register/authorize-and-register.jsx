@@ -115,7 +115,7 @@ export const AuthorizeAndRegister = () => {
 					'loadedStatuses',
 					JSON.stringify(response.loadedStatuses),
 				);
-				if (Object.keys(response.cart).length !== 0) {
+				if (response.cart && Object.keys(response.cart).length !== 0) {
 					dispatch(setCart(response.cart));
 					sessionStorage.setItem(
 						'currentUserCartData',

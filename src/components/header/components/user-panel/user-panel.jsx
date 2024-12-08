@@ -1,5 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUserLogin, selectUserStatus } from '../../../../selectors';
+import { Link, useMatch } from 'react-router-dom';
+import {
+	selectCartTotalNumber,
+	selectUserLogin,
+	selectUserStatus,
+} from '../../../../selectors';
 import { Button } from '../../../button/button';
 import styles from './user-panel.module.css';
 import { LOGOUT, RESET_CART } from '../../../../actions';
@@ -8,9 +13,13 @@ import { useServerRequest } from '../../../../hooks';
 export const UserPanel = () => {
 	const userLogin = useSelector(selectUserLogin);
 	const userStatus = useSelector(selectUserStatus);
+	const cartTotalNumber = useSelector(selectCartTotalNumber);
 
 	const dispatch = useDispatch();
 	const requestServer = useServerRequest();
+	const isCart = !!useMatch('/cart');
+	const isPart = useMatch('/part/:id');
+
 
 	const onLogout = () => {
 		requestServer('logout');
@@ -23,6 +32,12 @@ export const UserPanel = () => {
 
 	return (
 		<div className={styles.userPanel}>
+			{!isCart && !isPart && cartTotalNumber !== 0 && <Link to="/cart">
+				<img
+					src="../pictures/icons/cart+.png"
+					alt="Корзина"
+				/>
+			</Link>}
 			<div className={styles.userName}>{userLogin}</div>
 
 			<div className={styles.userDiscount}>

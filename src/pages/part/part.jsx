@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useCartData, useServerRequest } from '../../hooks';
+import { useCartDataToAdd, useServerRequest } from '../../hooks';
 import { Button, Cart, ErrorLabel, Input, PartPrice } from '../../components';
 import {
 	getCombineName,
@@ -12,7 +12,7 @@ import {
 import { selectCartParts, selectCombines, selectPart } from '../../selectors';
 import { PART_PLUG } from '../../constants';
 import styles from './part.module.css';
-import { addToCartAsync } from '../../actions';
+import { updateCartAsync } from '../../actions';
 
 export const Part = () => {
 	const { id } = useParams();
@@ -31,9 +31,7 @@ export const Part = () => {
 	const [quantityValue, setQuantityValue] = useState('1');
 
 	const requestServer = useServerRequest();
-	const cartData = useCartData(id, quantityValue);
-
-	// const currentQuantity = cartData?
+	const cartData = useCartDataToAdd(id, quantityValue);
 
 	const onOpenImage = () => {
 		setOpenImage(!openImage);
@@ -72,7 +70,7 @@ export const Part = () => {
 	};
 
 	const onAddToCart = () => {
-		dispatch(addToCartAsync(requestServer, cartData)).then((error) => {
+		dispatch(updateCartAsync(requestServer, cartData)).then((error) => {
 			setErrorMesage(error);
 
 			if (!error) {
@@ -80,9 +78,8 @@ export const Part = () => {
 					'currentUserCartData',
 					JSON.stringify(cartData),
 				);
-				setQuantityValue('1')
+				setQuantityValue('1');
 			}
-
 		});
 	};
 
@@ -153,7 +150,10 @@ export const Part = () => {
 					/>
 					<div className={styles.partButtons}>
 						<Button onClick={() => navigate(-1)}>НАЗАД</Button>
-						<Button disabled={errorMessage || currentQuantity === 0} onClick={onAddToCart}>
+						<Button
+							disabled={errorMessage || currentQuantity === 0}
+							onClick={onAddToCart}
+						>
 							Добавить в корзину
 						</Button>
 					</div>

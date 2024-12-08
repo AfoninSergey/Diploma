@@ -1,5 +1,6 @@
 npm run server
 npm start
+
 ОБЛАСТИ ХРАНЕНИЯ ДАННЫХ:
 
 -   БД (db) на JSON Server

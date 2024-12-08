@@ -1,4 +1,5 @@
 .part {
+	position: relative;
 	display: flex;
 	width: 776px;
 	column-gap: 20px;
@@ -6,6 +7,10 @@
 	background-color: #f5f5f5;
 	border-radius: 10px;
 	padding: 15px;
+}
+.part.inCart {
+	height: 170px;
+	width: 100%;
 }
 
 .partImage {
@@ -15,6 +20,11 @@
 	overflow: hidden;
 	border-radius: 10px;
 	background-color: #c4c4c4;
+}
+
+.inCart .partImage {
+	height: 140px;
+	width: 130px;
 }
 .partImage img {
 	position: relative;
@@ -40,13 +50,18 @@
 
 .partContent {
 	font-size: 21px;
+	/* width: 100%; */
 }
 
-.partTitle  {
+.partTitle {
 	width: 635px;
 	display: flex;
 	column-gap: 6px;
 	justify-content: start;
+}
+
+.inCart .partTitle {
+	width: 625px;
 }
 
 .partName {
@@ -64,4 +79,20 @@
 	justify-content: space-between;
 	align-items: end;
 }
+.inCart .partArticleAndPrice {
+	height: 90px;
+}
 
+.inCart .partBottom {
+	height: 90px;
+}
+
+.partQuantity {
+	padding-top: 20px;
+}
+
+.inCart button {
+	position: relative;
+	margin: 0;
+	top: 20px;
+}

@@ -12,6 +12,7 @@ export const sessions = {
 	},
 	async access(hash, accessRoles) {
 		const session = await getSession(hash);
+
 		return !!session && accessRoles.includes(session.userRoleId);
 	},
 };

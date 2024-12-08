@@ -3,3 +3,4 @@ export * from './users/users';
 export * from './error-page/error-page';
 export * from './main/main';
 export * from './part/part';
+export * from './cart-page/cart-page'

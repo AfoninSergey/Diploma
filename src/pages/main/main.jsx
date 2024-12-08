@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useMatch, useNavigate } from 'react-router-dom';
 import { selectCombines, selectParts } from '../../selectors';
-import { Button, Pagination, SearchPanel } from '../../components';
-import { CombainItem, PartItem } from './components';
+import { Button, InfoBlock, Pagination, PartItem, SearchPanel } from '../../components';
+import { CombainItem } from './components';
 import { MAX_ITEMS, SORTING_ORDER } from '../../constants';
 import {
 	filterPartsByCombine,
@@ -31,8 +31,8 @@ export const Main = () => {
 	const isCombinesAndParts = !!useMatch('/parts');
 
 	useEffect(() => {
-		setPartsToDisplay(parts)
-	}, [parts])
+		setPartsToDisplay(parts);
+	}, [parts]);
 
 	const onSelectCombain = (id) => {
 		if (!isCombinesAndParts) {
@@ -156,9 +156,9 @@ export const Main = () => {
 					<div className={styles.parts}>
 						<ul className={styles.partsList}>
 							{partsList.length === 0 && (
-								<div className={styles.infoBlock}>
+								<InfoBlock>
 									По заданным критериям, запчасти не найдены...
-								</div>
+								</InfoBlock>
 							)}
 							{partsList.map(({ id, ...props }) => (
 								<PartItem

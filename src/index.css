@@ -18,7 +18,7 @@ body {
 		url(../public/pictures/bg/bg.jpg);
 	background-position-x: right, center;
 	background-position-y: -30px, top;
-	background-size: /* 1270px 695px */ 80%, contain;
+	background-size: /* 1270px 695px */ 80%, 100%;
 	background-repeat: no-repeat, no-repeat;
 	background-color: rgb(218, 189, 148);
 
@@ -40,5 +40,5 @@ a {
 
 .noScroll {
 	overflow: hidden;
-	padding-right: 15px;
+	padding-right: 25px;
 }

@@ -1,8 +1,8 @@
-import { setCartData } from '../api';
+import { deleteCartData } from '../api';
 import { ROLE } from '../constants';
 import { sessions } from '../sessions';
 
-export const updateCartData = async (userSession, cartData) => {
+export const removeCartData = async (userSession, cartId) => {
 	const accessRoles = [ROLE.ADMIN, ROLE.CLIENT];
 	const access = await sessions.access(userSession, accessRoles);
 
@@ -13,10 +13,10 @@ export const updateCartData = async (userSession, cartData) => {
 		};
 	}
 
-	const updatedCart = await setCartData(cartData);
+	const { ok } = await deleteCartData(cartId);
 
 	return {
 		error: null,
-		response: updatedCart,
+		response: ok,
 	};
 };

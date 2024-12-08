@@ -93,7 +93,7 @@
 	height: 51px;
 	padding: 0 25px;
 }
-.saveButton {
+.saveButton, .greenButton {
 	background: linear-gradient(
 		rgb(92, 151, 55) 0%,
 		rgb(97, 159, 59) 50%,
@@ -101,7 +101,7 @@
 		rgb(84, 137, 51) 100%
 	);
 }
-.deleteButton {
+.deleteButton, .redButton {
 	background: linear-gradient(
 		rgb(139, 35, 35) 0%,
 		rgb(147, 37, 37) 50%,
