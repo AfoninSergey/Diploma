@@ -2,7 +2,14 @@ import { useLayoutEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { useServerRequest } from './hooks';
-import { AuthorizeAndRegister, CartPage, Main, Part, Users } from './pages';
+import {
+	AuthorizeAndRegister,
+	CartPage,
+	Main,
+	Part,
+	PartList,
+	Users,
+} from './pages';
 import { Header, Modal } from './components';
 import {
 	loadCombinesAsync,
@@ -53,9 +60,10 @@ export const OnlineStore = () => {
 						</div>
 					}
 				/>
+				<Route path="/edit" element={<PartList />} />
 				<Route path="/parts" element={<Main />} />
 				<Route path="/part/:id" element={<Part />} />
-				<Route path="/cart" element={<CartPage/>} />
+				<Route path="/cart" element={<CartPage />} />
 				<Route path="/users" element={<Users />} />
 				<Route path="/login" element={<AuthorizeAndRegister />} />
 				<Route path="/register" element={<AuthorizeAndRegister />} />
@@ -68,7 +76,7 @@ export const OnlineStore = () => {
 					}
 				/>
 			</Routes>
-			<Modal/>
+			<Modal />
 		</div>
 	);
 };

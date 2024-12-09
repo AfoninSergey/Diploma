@@ -29,7 +29,7 @@ export const UserItem = ({
 	const [initialStatusId, setInitialStatusId] = useState(loadedStatusId);
 	const [initialAmount, setInitialAmount] = useState(loadedAmount);
 	const [userStatusId, setUserStatusId] = useState(initialStatusId);
-	const [usersAmount, setUserAmount] = useState(initialAmount);
+	const [userAmount, setUserAmount] = useState(initialAmount);
 
 	const dispatch = useDispatch();
 	const requestServer = useServerRequest();
@@ -60,7 +60,7 @@ export const UserItem = ({
 	const onUserDataSave = () => {
 		dispatch(setServerError(null));
 		dispatch(
-			saveUserDataAsync(requestServer, userId, userStatusId, usersAmount),
+			saveUserDataAsync(requestServer, userId, userStatusId, userAmount),
 		).then(({ error, response }) => {
 			if (error !== null) {
 				dispatch(dispatch(setServerError(error)));
@@ -103,11 +103,11 @@ export const UserItem = ({
 	};
 
 	const isCancelButtonDisabled =
-		initialStatusId === userStatusId && +initialAmount === +usersAmount;
+		initialStatusId === userStatusId && +initialAmount === +userAmount;
 	const isSaveButtonDisabled =
-		(initialStatusId === userStatusId && +initialAmount === +usersAmount) ||
-		usersAmount.length === 0 ||
-		isNaN(usersAmount);
+		(initialStatusId === userStatusId && +initialAmount === +userAmount) ||
+		userAmount.length === 0 ||
+		isNaN(userAmount);
 
 	return (
 		<div className={styles.usersItem}>
@@ -125,7 +125,7 @@ export const UserItem = ({
 				))}
 			</Select>
 			<Input
-				value={usersAmount}
+				value={userAmount}
 				placeholder={initialAmount}
 				className={styles.usersAmount}
 				onChange={onUserAmountChange}

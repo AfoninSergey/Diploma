@@ -11,7 +11,7 @@ const initialAppState = {
 	serverError: null,
 	accessError: ERROR_MESSAGE.ACCESS,
 	isLoading: true,
-	updateUsersTrigger: false,
+	updateTrigger: false,
 	modal: {
 		isOpen: false,
 		restText: '',
@@ -86,7 +86,7 @@ export const appReducer = (state = initialAppState, { type, payload }) => {
 		case ACTION_TYPE.CHANGE_TRIGGER:
 			return {
 				...state,
-				updateUsersTrigger: !state.updateUsersTrigger,
+				updateTrigger: !state.updateTrigger,
 			};
 		case ACTION_TYPE.OPEN_MODAL:
 			return {

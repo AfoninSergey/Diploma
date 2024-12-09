@@ -10,7 +10,7 @@ export * from './select-validation-error';
 export * from './select-statuses';
 export * from './select-access-error';
 export * from './select-users';
-export * from './select-update-users-trigger.js';
+export * from './select-update-trigger.js.js';
 export * from './select-combines.js';
 export * from './select-parts.js';
 export * from './select-part.js';
