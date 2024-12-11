@@ -8,3 +8,6 @@ export * from './fetch-combines';
 export * from './fetch-parts';
 export * from './update-cart-data';
 export * from './remove-cart-data';
+export * from './check-access';
+export * from './update-part-data';
+export * from './remove-part';

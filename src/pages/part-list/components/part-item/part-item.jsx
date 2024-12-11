@@ -1,178 +1,164 @@
 import { useState } from 'react';
-// import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Input, Select } from '../../../../components';
-
-// import {
-// 	getAppropriateAmount,
-// 	getAppropriateStatusId,
-// 	getZeros,
-// 	setNoScroll,
-// } from '../../../../utils';
-// import {
-// 	openModal,
-// 	removeUserAsync,
-// 	saveUserDataAsync,
-// 	setServerError,
-// 	UPDATE_USERS_TRIGGER,
-// } from '../../../../actions';
-// import { useServerRequest } from '../../../../hooks';
-// import { ERROR_MESSAGE } from '../../../../constants';
+import { selectPart } from '../../../../selectors';
+import { useServerRequest } from '../../../../hooks';
+import { getZeros, setNoScroll } from '../../../../utils';
+import {
+	openModal,
+	removePartAsync,
+	resetPartData,
+	savePartDataAsync,
+	setIdForPartUpdating,
+	setServerError,
+	updateChangedPart,
+} from '../../../../actions';
 import styles from './part-item.module.css';
 
-export const PartItem = ({
-	partId,
-	loadedArticle,
-	loadedName,
-	loadedQuantity,
-	loadedPrice,
-	loadedImageUrl,
-	loadedCombineId,
-	combines,
-}) => {
-	const [initialArticle, setInitialArticle] = useState(loadedArticle);
-	const [article, setArticle] = useState(initialArticle);
-	const [initialName, setInitialName] = useState(loadedName);
-	const [name, setName] = useState(initialName);
-	const [initialQuantity, setInitialQuantity] = useState(loadedQuantity);
-	const [quantity, setQuantity] = useState(initialQuantity);
-	const [initialPrice, setInitialPrice] = useState(loadedPrice);
-	const [price, setPrice] = useState(initialPrice);
-	const [initialImageUrl, setInitialImageUrl] = useState(loadedImageUrl);
-	const [imageUrl, setImageUrl] = useState(initialImageUrl);
-	const [initialCombineId, setInitialCombineId] = useState(loadedCombineId);
-	const [combineId, setCombineId] = useState(initialCombineId);
+export const PartItem = ({ id, combines, initialPart }) => {
+	const [initialPartData, setInitialPartData] = useState(initialPart);
 
-	// const dispatch = useDispatch();
-	// const requestServer = useServerRequest();
+	const loadedPart = useSelector(selectPart(id)) || {};
+	const { article, name, quantity, price, imageUrl, combineId } = loadedPart;
 
-	const onArticleChange = ({ target: { value } }) => {
-		setArticle(value);
+	const dispatch = useDispatch();
+	const requestServer = useServerRequest();
+
+	const onPartDataChange = ({ target: { value, name } }) => {
+		dispatch(setServerError(null));
+		if (name === 'quantity') {
+			value =
+				value.indexOf('0') === 0 ? quantity : value.replace(/[^0-9]/g, '');
+		} else if (name === 'price') {
+			value =
+				value.indexOf('0') === 0
+					? price
+					: value.replace(/[^0-9.,]/g, '').replace(',', '.');
+		}
+
+		dispatch(updateChangedPart({ id, value, name }));
 	};
-	const onArticleBlur = ({ target: { value } }) => {
-		if (value === '') {
-			setArticle(initialArticle);
+
+	const onPartDataBlur = ({ target: { value, name } }) => {
+		if (value === '' && name !== 'imageUrl') {
+			value = initialPartData[name];
+			dispatch(updateChangedPart({ id, value, name }));
+		} else if (name === 'price') {
+			value = getZeros(value);
+			dispatch(updateChangedPart({ id, value, name }));
 		}
 	};
 
-	const onNameChange = ({ target: { value } }) => {
-		setName(value);
-	};
-	const onNameBlur = ({ target: { value } }) => {
-		if (value === '') {
-			setName(initialName);
-		}
+	const onPartDataReset = () => {
+		dispatch(setServerError(null));
+		dispatch(resetPartData(initialPartData));
 	};
 
-	const onQuantityChange = ({ target: { value } }) => {
-		value = value.replace(/[^0-9]/g, '');
-
-		if (value.indexOf('0') === 0) {
-			value = quantity;
-		}
-
-		setQuantity(value);
-	};
-	const onIncrQuantity = () => {
-		setQuantity(+quantity + 1);
-	};
-	const onDecrQuantity = () => {
-		if (+quantity > 1) {
-			setQuantity(quantity - 1);
-		}
-	};
-	const onQuantityBlur = ({ target: { value } }) => {
-		if (value === '') {
-			setQuantity(initialQuantity);
-		}
+	const onPartDataSave = () => {
+		dispatch(setServerError(null));
+		dispatch(savePartDataAsync(requestServer, id, loadedPart)).then(
+			({ error, response }) => {
+				if (error === null && response.id !== undefined) {
+					setInitialPartData(response);
+					dispatch(setIdForPartUpdating(response.id));
+				}
+			},
+		);
 	};
 
-	const onPriceChange = ({ target: { value } }) => {
-		value = value.replace(/[^0-9.,]/g, '').replace(',', '.');
-		setPrice(value);
-	};
-	const onPriceBlur = ({ target: { value } }) => {
-		if (value === '') {
-			setPrice(initialPrice);
-		}
+	const onPartRemove = () => {
+		dispatch(removePartAsync(requestServer, id));
 	};
 
-	const onImageUrlChange = ({ target: { value } }) => {
-		setImageUrl(value);
-	};
-	const onImageUrlBlur = ({ target: { value } }) => {
-		if (value === '') {
-			setImageUrl(initialImageUrl);
-		}
-	};
-
-	const onCombineChange = ({ target: { value } }) => {
-		setCombineId(value);
+	const onOpenModal = () => {
+		dispatch(setServerError(null));
+		setNoScroll(true);
+		dispatch(
+			openModal({
+				text: 'эту запчасть',
+				onConfirm: onPartRemove,
+			}),
+		);
 	};
 
-	const onCancel = () => {
-		setArticle(initialArticle);
-		setName(initialName);
-		setQuantity(initialQuantity);
-		setPrice(initialPrice);
-		setImageUrl(initialImageUrl);
-		setCombineId(initialCombineId);
-	};
+	const isCancelButtonDisabled =
+		JSON.stringify({
+			...initialPartData,
+			quantity: +initialPartData.quantity,
+		}) ===
+		JSON.stringify({
+			...loadedPart,
+			quantity: +loadedPart.quantity,
+			price: getZeros(loadedPart.price),
+		});
+	const isSaveButtonDisabled = isCancelButtonDisabled || isNaN(price);
 	return (
 		<div className={styles.partItem}>
 			<Input
 				className={styles.partArticle}
+				name="article"
 				value={article}
-				placeholder={initialArticle}
-				onChange={onArticleChange}
-				onBlur={onArticleBlur}
+				placeholder={initialPartData.article}
+				onInput={onPartDataChange}
+				onBlur={onPartDataBlur}
 			/>
 			<Input
 				className={styles.partName}
+				name="name"
 				value={name}
-				placeholder={initialName}
-				onChange={onNameChange}
-				onBlur={onNameBlur}
+				placeholder={initialPartData.name}
+				onChange={onPartDataChange}
+				onBlur={onPartDataBlur}
 			/>
 			<div className={styles.partQuantity}>
 				<Input
+					name="quantity"
 					value={quantity}
-					placeholder={initialQuantity}
-					onChange={onQuantityChange}
-					onBlur={onQuantityBlur}
+					placeholder={initialPartData.quantity}
+					onChange={onPartDataChange}
+					onBlur={onPartDataBlur}
 				/>
 				<button
 					type="button"
+					name="quantity"
+					value={+quantity + 1}
 					className={styles.arrowUp}
-					onClick={onIncrQuantity}
+					onClick={onPartDataChange}
 				>
 					▲
 				</button>
 				<button
 					type="button"
+					name="quantity"
 					className={styles.arrowDown}
-					onClick={onDecrQuantity}
+					value={+quantity > 1 ? +quantity - 1 : quantity}
+					onClick={onPartDataChange}
 				>
 					▼
 				</button>
 			</div>
 			<Input
 				className={styles.partPrice}
+				name="price"
 				value={price}
-				placeholder={initialPrice}
-				onChange={onPriceChange}
-				onBlur={onPriceBlur}
+				placeholder={initialPartData.price}
+				onChange={onPartDataChange}
+				onBlur={onPartDataBlur}
 			/>
 			<Input
 				className={styles.partImageUrl}
+				name="imageUrl"
 				value={imageUrl}
-				placeholder={initialImageUrl}
-				onChange={onImageUrlChange}
-				onBlur={onImageUrlBlur}
+				placeholder={initialPartData.imageUrl}
+				onChange={onPartDataChange}
+				onBlur={onPartDataBlur}
 			/>
 			<Select
 				className={styles.partCombine}
+				name="combineId"
 				value={combineId}
-				onChange={onCombineChange}
+				onChange={onPartDataChange}
+				onBlur={onPartDataBlur}
 			>
 				{combines.map(({ id, name }) => (
 					<option key={id} value={id}>
@@ -182,20 +168,20 @@ export const PartItem = ({
 			</Select>
 			<Button
 				addClass="cancelButton"
-				// disabled={isCancelButtonDisabled}
+				disabled={isCancelButtonDisabled}
 				title="Отменить изменения"
-				onClick={onCancel}
+				onClick={onPartDataReset}
 			/>
 			<Button
 				addClass="saveButton"
-				// disabled={isSaveButtonDisabled}
+				disabled={isSaveButtonDisabled}
 				title="Сохранить изменения"
-				// onClick={onUserDataSave}
+				onClick={onPartDataSave}
 			/>
 			<Button
 				addClass="deleteButton"
 				title="Удалить пользователя"
-				// onClick={onOpenModal}
+				onClick={onOpenModal}
 			/>
 		</div>
 	);

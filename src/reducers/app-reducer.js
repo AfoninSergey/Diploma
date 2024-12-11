@@ -8,16 +8,17 @@ const initialAppState = {
 		repeatPassword: '',
 		validationError: null,
 	},
-	serverError: null,
-	accessError: ERROR_MESSAGE.ACCESS,
-	isLoading: true,
-	updateTrigger: false,
 	modal: {
 		isOpen: false,
 		restText: '',
 		onConfirm: () => {},
 		onCancel: () => {},
 	},
+	serverError: null,
+	accessError: ERROR_MESSAGE.ACCESS,
+	isLoading: true,
+	updateTrigger: false,
+
 };
 export const appReducer = (state = initialAppState, { type, payload }) => {
 	switch (type) {
@@ -103,6 +104,7 @@ export const appReducer = (state = initialAppState, { type, payload }) => {
 				...state,
 				modal: initialAppState.modal,
 			};
+		
 		default:
 			return state;
 	}

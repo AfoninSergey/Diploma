@@ -1,1 +1,1 @@
-export const selectParts = ({ parts }) => parts;
+export const selectParts = ({ parts }) => parts.partList;

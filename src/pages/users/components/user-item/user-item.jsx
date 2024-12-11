@@ -12,7 +12,7 @@ import {
 	removeUserAsync,
 	saveUserDataAsync,
 	setServerError,
-	UPDATE_USERS_TRIGGER,
+	UPDATE_CHANGE_TRIGGER,
 } from '../../../../actions';
 import { useServerRequest } from '../../../../hooks';
 import { ERROR_MESSAGE } from '../../../../constants';
@@ -63,7 +63,7 @@ export const UserItem = ({
 			saveUserDataAsync(requestServer, userId, userStatusId, userAmount),
 		).then(({ error, response }) => {
 			if (error !== null) {
-				dispatch(dispatch(setServerError(error)));
+				dispatch(setServerError(error));
 			} else if (
 				response.amount === undefined ||
 				response.statusId === undefined
@@ -78,21 +78,21 @@ export const UserItem = ({
 	};
 
 	const onUserRemove = () => {
-		dispatch(setServerError(null));
 		dispatch(removeUserAsync(requestServer, userId)).then(
 			({ error, response }) => {
 				if (error !== null) {
-					dispatch(dispatch(setServerError(error)));
+					dispatch(setServerError(error));
 				} else if (!response) {
 					dispatch(setServerError(ERROR_MESSAGE.SERVER));
 				} else {
-					dispatch(UPDATE_USERS_TRIGGER);
+					dispatch(UPDATE_CHANGE_TRIGGER);
 				}
 			},
 		);
 	};
 
 	const onOpenModal = () => {
+		dispatch(setServerError(null));
 		setNoScroll(true);
 		dispatch(
 			openModal({

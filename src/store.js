@@ -3,7 +3,7 @@ import { thunk } from 'redux-thunk';
 import {
 	appReducer,
 	cartReducer,
-	combinesRducer,
+	combinesReducer,
 	partsReducer,
 	statusesReduser,
 	userReduser,
@@ -13,7 +13,7 @@ import {
 const reducer = combineReducers({
 	app: appReducer,
 	cart: cartReducer,
-	combines: combinesRducer,
+	combines: combinesReducer,
 	parts: partsReducer,
 	user: userReduser,
 	users: usersRsducer,

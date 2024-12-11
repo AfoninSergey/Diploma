@@ -10,7 +10,6 @@ export const usersRsducer = (state = initialUsersState, { type, payload }) => {
 			return state.map((user) =>
 				user.id === payload.id ? { ...payload } : user,
 			);
-
 		case ACTION_TYPE.DELETE_USER:
 			return state.filter((user) => user.id !== payload);
 		default:
