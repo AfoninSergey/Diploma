@@ -110,7 +110,7 @@
 	);
 }
 
-.cancelButton {
+.cancelButton, .yellowButton {
 	background: linear-gradient(
 		rgb(194, 190, 74) 0%,
 		rgb(208, 203, 82) 50%,

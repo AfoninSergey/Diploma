@@ -11,3 +11,4 @@ export * from './remove-cart-data';
 export * from './check-access';
 export * from './update-part-data';
 export * from './remove-part';
+export * from './update-parts-data';

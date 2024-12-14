@@ -16,11 +16,15 @@ import {
 import styles from './part-item.module.css';
 
 export const PartItem = ({ id, combines, initialPart }) => {
-	const [initialPartData, setInitialPartData] = useState(initialPart);
 
+	const [initialPartData, setInitialPartData] = useState(initialPart);
 	const loadedPart = useSelector(selectPart(id)) || {};
 	const { article, name, quantity, price, imageUrl, combineId } = loadedPart;
-
+// if (id === '00001') {
+// 	console.log('initialPart',initialPart)
+// console.log('loadedPart', loadedPart)
+// console.log('=',JSON.stringify(initialPartData) === JSON.stringify(loadedPart))
+// }
 	const dispatch = useDispatch();
 	const requestServer = useServerRequest();
 

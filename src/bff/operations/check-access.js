@@ -7,7 +7,7 @@ export const checkAccess = async (userSession) => {
 
 	if (!access) {
 		return {
-			error: true,
+			error: 'Доступ запрещён!',
 			response: null,
 		};
 	}

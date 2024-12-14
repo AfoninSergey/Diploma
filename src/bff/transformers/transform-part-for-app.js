@@ -1,4 +1,4 @@
-export const transformPart = (dbPart) => ({
+export const transformPartForApp = (dbPart) => ({
 	id: dbPart.id,
 	imageUrl: dbPart.image_url,
 	article: dbPart.article,

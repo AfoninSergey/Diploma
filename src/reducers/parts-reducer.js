@@ -17,6 +17,18 @@ export const partsReducer = (state = initialPartsState, { type, payload }) => {
 						: part,
 				),
 			};
+		case ACTION_TYPE.UPDATE_CHANGED_PARTS:
+				return {
+					...state,
+					partList: state.partList.map(
+						(initialPart) =>
+							payload.find(
+								(changedPart) => initialPart.id === changedPart.id,
+							) || initialPart,
+					),
+				};
+
+
 		case ACTION_TYPE.RESET_PART_DATA:
 			return {
 				...state,

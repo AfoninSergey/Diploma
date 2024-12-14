@@ -1,4 +1,4 @@
-export const transformParts = (parts) =>
+export const transformPartsForApp = (parts) => 
 	parts.map((dbPart) => ({
 		id: dbPart.id,
 		imageUrl: dbPart.image_url,
@@ -6,5 +6,5 @@ export const transformParts = (parts) =>
 		name: dbPart.name,
 		price: dbPart.price,
 		quantity: dbPart.quantity,
-		combineId: dbPart.combine_id
+		combineId: dbPart.combine_id,
 	}));

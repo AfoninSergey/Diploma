@@ -2,7 +2,13 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useMatch, useNavigate } from 'react-router-dom';
 import { selectCombines, selectParts } from '../../selectors';
-import { Button, InfoBlock, Pagination, PartItem, SearchPanel } from '../../components';
+import {
+	Button,
+	InfoBlock,
+	Pagination,
+	PartItem,
+	SearchPanel,
+} from '../../components';
 import { CombainItem } from './components';
 import { MAX_ITEMS, SORTING_ORDER } from '../../constants';
 import {
@@ -93,6 +99,16 @@ export const Main = () => {
 
 		if (priceSortingOrder !== SORTING_ORDER.NOT_APPLIED) {
 			foundParts = sortByNumber(priceSortingOrder, foundParts, 'price');
+		}
+
+		const { totalPages } = getPaginationData(
+			foundParts,
+			MAX_ITEMS.MAIN_PAGE_PARTS,
+			currentPage,
+		);
+
+		if (currentPage > totalPages) {
+			setCurrentPage(1);
 		}
 
 		setPartsToDisplay(foundParts);

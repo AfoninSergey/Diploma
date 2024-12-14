@@ -13,12 +13,18 @@ import {
 import {
 	getCurrentSortingOrder,
 	getPaginationData,
+	getZeros,
 	search,
 	sortByNumber,
 } from '../../utils';
 import { MAX_ITEMS, SORTING_ORDER } from '../../constants';
 import styles from './part-list.module.css';
-import { checkAccessAsync, setIdForPartUpdating } from '../../actions';
+import {
+	checkAccessAsync,
+	savePartsDataAsync,
+	setIdForPartUpdating,
+	setParts,
+} from '../../actions';
 import { useServerRequest } from '../../hooks';
 
 export const PartList = () => {
@@ -41,7 +47,7 @@ export const PartList = () => {
 
 	useEffect(() => {
 		dispatch(checkAccessAsync(requestServer));
-	}, [dispatch, requestServer, accessError]);
+	}, [dispatch, requestServer]);
 
 	useEffect(() => {
 		if (partsToDisplay.length === 0 && searchString.length === 0) {
@@ -54,8 +60,8 @@ export const PartList = () => {
 		if (idForPartUpdating) {
 			const updatedPart = parts.find((part) => part.id === idForPartUpdating);
 
-			let partsWithUpdatedOrDeletedPart = updatedPart ?
-				initialParts.map((part) =>
+			let partsWithUpdatedOrDeletedPart = updatedPart
+				? initialParts.map((part) =>
 						part.id === idForPartUpdating ? updatedPart : part,
 					)
 				: initialParts.filter((part) => part.id !== idForPartUpdating);
@@ -108,7 +114,35 @@ export const PartList = () => {
 			foundParts = sortByNumber(priceSortingOrder, foundParts, 'price');
 		}
 
+		const { totalPages } = getPaginationData(
+			foundParts,
+			MAX_ITEMS.EDIT_PAGE_PARTS,
+			currentPage,
+		);
+
+		if (currentPage > totalPages) {
+			setCurrentPage(1);
+		}
 		setPartsToDisplay(foundParts);
+	};
+
+	const onCancelAllPartsChanges = () => {
+		dispatch(setParts(initialParts));
+		setPartsToDisplay(initialParts);
+		setPriceSortingOrder(SORTING_ORDER.NOT_APPLIED);
+		setSearchString('');
+	};
+
+	const onSaveAllPartsChanges = () => {
+		dispatch(savePartsDataAsync(requestServer, initialParts, parts)).then(
+			({ updatedSuccessfully }) => {
+				console.log('updatedSuccessfully', updatedSuccessfully)
+				if (updatedSuccessfully) {
+					setInitialParts(parts);
+					setPartsToDisplay(parts)
+				}
+			},
+		);
 	};
 
 	const {
@@ -116,6 +150,25 @@ export const PartList = () => {
 		isPagination,
 		totalPages,
 	} = getPaginationData(partsToDisplay, MAX_ITEMS.EDIT_PAGE_PARTS, currentPage);
+
+	const isCancelButtonDisabled =
+		JSON.stringify(
+			initialParts.map((part) => ({
+				...part,
+				quantity: +part.quantity,
+				price: getZeros(part.price),
+			})),
+		) ===
+		JSON.stringify(
+			parts.map((part) => ({
+				...part,
+				quantity: +part.quantity,
+				price: getZeros(part.price),
+			})),
+		);
+
+	const isSaveButtonDisabled =
+		isCancelButtonDisabled || parts.some(({ price }) => isNaN(price));
 
 	if (accessError) return <ErrorPage>{accessError}</ErrorPage>;
 	return (
@@ -152,6 +205,22 @@ export const PartList = () => {
 								combines={combines}
 							/>
 						))}
+						<div className={styles.partsButtons}>
+							<Button
+								addClass="greenButton"
+								disabled={isSaveButtonDisabled}
+								onClick={onSaveAllPartsChanges}
+							>
+								Сохранить всё!
+							</Button>
+							<Button
+								addClass="yellowButton"
+								disabled={isCancelButtonDisabled}
+								onClick={onCancelAllPartsChanges}
+							>
+								Отменить всё!
+							</Button>
+						</div>
 					</Form>
 				)}
 				{isPagination && (
