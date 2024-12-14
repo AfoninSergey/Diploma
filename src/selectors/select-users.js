@@ -1,1 +1,1 @@
-export const selectUsers = ({ users }) => users;
+export const selectUsers = ({ users }) => users.userList;

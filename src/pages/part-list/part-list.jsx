@@ -136,10 +136,22 @@ export const PartList = () => {
 	const onSaveAllPartsChanges = () => {
 		dispatch(savePartsDataAsync(requestServer, initialParts, parts)).then(
 			({ updatedSuccessfully }) => {
-				console.log('updatedSuccessfully', updatedSuccessfully)
 				if (updatedSuccessfully) {
 					setInitialParts(parts);
-					setPartsToDisplay(parts)
+
+					let updatedParts = parts;
+					if (priceSortingOrder !== SORTING_ORDER.NOT_APPLIED) {
+						updatedParts = sortByNumber(
+							priceSortingOrder,
+							updatedParts,
+							'price',
+						);
+					}
+					if (searchString.length !== 0) {
+						updatedParts = search(updatedParts, searchString, 'name');
+					}
+
+					setPartsToDisplay(updatedParts);
 				}
 			},
 		);
@@ -201,7 +213,7 @@ export const PartList = () => {
 							<PartItem
 								key={part.id}
 								id={part.id}
-								initialPart={part}
+								part={part}
 								combines={combines}
 							/>
 						))}

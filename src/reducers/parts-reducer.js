@@ -3,6 +3,7 @@ import { ACTION_TYPE } from '../actions';
 const initialPartsState = {
 	partList: [],
 	idForPartUpdating: null,
+	updatePartsTrigger: false,
 };
 export const partsReducer = (state = initialPartsState, { type, payload }) => {
 	switch (type) {
@@ -17,17 +18,6 @@ export const partsReducer = (state = initialPartsState, { type, payload }) => {
 						: part,
 				),
 			};
-		case ACTION_TYPE.UPDATE_CHANGED_PARTS:
-				return {
-					...state,
-					partList: state.partList.map(
-						(initialPart) =>
-							payload.find(
-								(changedPart) => initialPart.id === changedPart.id,
-							) || initialPart,
-					),
-				};
-
 
 		case ACTION_TYPE.RESET_PART_DATA:
 			return {
@@ -43,6 +33,11 @@ export const partsReducer = (state = initialPartsState, { type, payload }) => {
 			};
 		case ACTION_TYPE.SET_PART_ID:
 			return { ...state, idForPartUpdating: payload };
+		case ACTION_TYPE.CHANGE_UPDATE_PARTS_TRIGGER:
+			return {
+				...state,
+				updatePartsTrigger: !state.updatePartsTrigger,
+			};
 		default:
 			return state;
 	}

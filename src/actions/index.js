@@ -13,7 +13,8 @@ export * from './reset-auth-and-reg-form-error';
 export * from './set-access-error';
 export * from './save-user-data-async';
 export * from './remove-user-async';
-export * from './update-change-trigger';
+export * from './change-update-users-trigger';
+export * from './change-update-parts-trigger';
 export * from './set-combines';
 export * from './set-parts';
 export * from './load-parts-async';
@@ -32,4 +33,3 @@ export * from './save-part-data-async';
 export * from './set-id-for-part-updating';
 export * from './remove-part-async';
 export * from './save-parts-data-async';
-export * from './update-changed-parts'

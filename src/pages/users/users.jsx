@@ -6,7 +6,7 @@ import {
 	selectAccessError,
 	selectServerError,
 	selectStatuses,
-	selectUpdateTrigger,
+	selectUpdateUsersTrigger,
 	selectUsers,
 } from '../../selectors';
 import { loadUsersAsync } from '../../actions';
@@ -26,7 +26,7 @@ export const Users = () => {
 	const accessError = useSelector(selectAccessError);
 	const users = useSelector(selectUsers);
 	const serverError = useSelector(selectServerError);
-	const trigger = useSelector(selectUpdateTrigger);
+	const updateUsersTrigger = useSelector(selectUpdateUsersTrigger);
 
 	const [usersToDisplay, setUsersToDisplay] = useState(users);
 	const [searchString, setSearchString] = useState('');
@@ -46,7 +46,7 @@ export const Users = () => {
 				setUsersToDisplay(response);
 			}
 		});
-	}, [requestServer, dispatch, accessError, trigger]);
+	}, [requestServer, dispatch, accessError, updateUsersTrigger]);
 
 	const onSearchString = ({ target: { value } }) => {
 		setSearchString(value);

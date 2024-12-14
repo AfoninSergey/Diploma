@@ -17,8 +17,6 @@ const initialAppState = {
 	serverError: null,
 	accessError: ERROR_MESSAGE.ACCESS,
 	isLoading: true,
-	updateTrigger: false,
-
 };
 export const appReducer = (state = initialAppState, { type, payload }) => {
 	switch (type) {
@@ -84,11 +82,7 @@ export const appReducer = (state = initialAppState, { type, payload }) => {
 				...state,
 				accessError: payload,
 			};
-		case ACTION_TYPE.CHANGE_TRIGGER:
-			return {
-				...state,
-				updateTrigger: !state.updateTrigger,
-			};
+
 		case ACTION_TYPE.OPEN_MODAL:
 			return {
 				...state,
@@ -104,7 +98,7 @@ export const appReducer = (state = initialAppState, { type, payload }) => {
 				...state,
 				modal: initialAppState.modal,
 			};
-		
+
 		default:
 			return state;
 	}

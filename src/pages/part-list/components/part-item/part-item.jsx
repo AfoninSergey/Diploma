@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Input, Select } from '../../../../components';
-import { selectPart } from '../../../../selectors';
+import { selectPart, selectUpdatePartsTrigger } from '../../../../selectors';
 import { useServerRequest } from '../../../../hooks';
 import { getZeros, setNoScroll } from '../../../../utils';
 import {
@@ -15,18 +15,21 @@ import {
 } from '../../../../actions';
 import styles from './part-item.module.css';
 
-export const PartItem = ({ id, combines, initialPart }) => {
+export const PartItem = ({ id, combines, part }) => {
 
-	const [initialPartData, setInitialPartData] = useState(initialPart);
+	const [initialPartData, setInitialPartData] = useState(part);
 	const loadedPart = useSelector(selectPart(id)) || {};
+	const updatePartTrigger = useSelector(selectUpdatePartsTrigger)
+
 	const { article, name, quantity, price, imageUrl, combineId } = loadedPart;
-// if (id === '00001') {
-// 	console.log('initialPart',initialPart)
-// console.log('loadedPart', loadedPart)
-// console.log('=',JSON.stringify(initialPartData) === JSON.stringify(loadedPart))
-// }
+
 	const dispatch = useDispatch();
 	const requestServer = useServerRequest();
+
+
+	useEffect(() => {
+		setInitialPartData(part)
+	}, [updatePartTrigger, part])
 
 	const onPartDataChange = ({ target: { value, name } }) => {
 		dispatch(setServerError(null));

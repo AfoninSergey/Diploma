@@ -12,7 +12,7 @@ import {
 	removeUserAsync,
 	saveUserDataAsync,
 	setServerError,
-	UPDATE_CHANGE_TRIGGER,
+	CHANGE_UPDATE_USERS_TRIGGER,
 } from '../../../../actions';
 import { useServerRequest } from '../../../../hooks';
 import { ERROR_MESSAGE } from '../../../../constants';
@@ -85,7 +85,7 @@ export const UserItem = ({
 				} else if (!response) {
 					dispatch(setServerError(ERROR_MESSAGE.SERVER));
 				} else {
-					dispatch(UPDATE_CHANGE_TRIGGER);
+					dispatch(CHANGE_UPDATE_USERS_TRIGGER);
 				}
 			},
 		);
