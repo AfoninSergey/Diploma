@@ -98,7 +98,11 @@ export const appReducer = (state = initialAppState, { type, payload }) => {
 				...state,
 				modal: initialAppState.modal,
 			};
-
+case ACTION_TYPE.SET_IS_LOADING:
+	return {
+		...state,
+		isLoading: payload
+	}
 		default:
 			return state;
 	}

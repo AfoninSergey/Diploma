@@ -4,12 +4,13 @@ import { Button, Form /* Loader */, SearchPanel } from '../../components';
 import { UserItem, UsersTitle } from './components';
 import {
 	selectAccessError,
+	selectIsLoading,
 	selectServerError,
 	selectStatuses,
 	selectUpdateUsersTrigger,
 	selectUsers,
 } from '../../selectors';
-import { loadUsersAsync } from '../../actions';
+import { loadUsersAsync, setIsLoading } from '../../actions';
 import { ErrorPage } from '../error-page/error-page';
 import {
 	getCurrentSortingOrder,
@@ -27,6 +28,7 @@ export const Users = () => {
 	const users = useSelector(selectUsers);
 	const serverError = useSelector(selectServerError);
 	const updateUsersTrigger = useSelector(selectUpdateUsersTrigger);
+	const isLoading = useSelector(selectIsLoading)
 
 	const [usersToDisplay, setUsersToDisplay] = useState(users);
 	const [searchString, setSearchString] = useState('');
@@ -41,9 +43,11 @@ export const Users = () => {
 	const requestServer = useServerRequest();
 
 	useEffect(() => {
+		dispatch(setIsLoading(true))
 		dispatch(loadUsersAsync(requestServer, accessError)).then((response) => {
 			if (response !== undefined) {
 				setUsersToDisplay(response);
+				dispatch(setIsLoading(false))
 			}
 		});
 	}, [requestServer, dispatch, accessError, updateUsersTrigger]);
@@ -96,9 +100,8 @@ export const Users = () => {
 		setUsersToDisplay(sortedUsers);
 	};
 
-	// return (<Loader/>) TODO
 
-	if (accessError) return <ErrorPage>{accessError}</ErrorPage>;
+	if (accessError && !isLoading) return <ErrorPage>{accessError}</ErrorPage>;
 
 	const errorMessage =
 		usersToDisplay.length === 0 ? ERROR_MESSAGE.NO_USERS_FOUND : serverError;

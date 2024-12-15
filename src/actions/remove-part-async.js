@@ -12,5 +12,6 @@ export const removePartAsync = (requestServer, partId) => (dispatch) =>
 		} else {
 			dispatch(deletePart(partId));
 			dispatch(setIdForPartUpdating(partId))
+			return { successfully: true };
 		}
 	});

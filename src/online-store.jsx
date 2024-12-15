@@ -10,11 +10,12 @@ import {
 	PartList,
 	Users,
 } from './pages';
-import { Header, Modal } from './components';
+import { Header, Loader, Modal } from './components';
 import {
 	loadCombinesAsync,
 	loadPartsAsync,
 	setCart,
+	setIsLoading,
 	setStatuses,
 	setUser,
 } from './actions';
@@ -25,8 +26,13 @@ export const OnlineStore = () => {
 	const requestServer = useServerRequest();
 
 	useLayoutEffect(() => {
-		dispatch(loadCombinesAsync(requestServer));
-		dispatch(loadPartsAsync(requestServer));
+		Promise.all([
+			dispatch(loadCombinesAsync(requestServer)),
+			dispatch(loadPartsAsync(requestServer)),
+		]).then(([combines, parts]) => {
+			if (combines.length !== 0 && parts.length !== 0)
+				dispatch(setIsLoading(false));
+		});
 
 		const currentUserDataJSON = sessionStorage.getItem('currentUserData');
 		const loadedStatusesJSON = sessionStorage.getItem('loadedStatuses');
@@ -76,6 +82,7 @@ export const OnlineStore = () => {
 					}
 				/>
 			</Routes>
+			<Loader />
 			<Modal />
 		</div>
 	);

@@ -13,6 +13,7 @@ import {
 	saveUserDataAsync,
 	setServerError,
 	CHANGE_UPDATE_USERS_TRIGGER,
+	setIsLoading,
 } from '../../../../actions';
 import { useServerRequest } from '../../../../hooks';
 import { ERROR_MESSAGE } from '../../../../constants';
@@ -59,6 +60,7 @@ export const UserItem = ({
 
 	const onUserDataSave = () => {
 		dispatch(setServerError(null));
+		dispatch(setIsLoading(true));
 		dispatch(
 			saveUserDataAsync(requestServer, userId, userStatusId, userAmount),
 		).then(({ error, response }) => {
@@ -73,11 +75,13 @@ export const UserItem = ({
 				setInitialStatusId(response.statusId);
 				setInitialAmount(getZeros(response.amount));
 				setUserAmount(getZeros(response.amount));
+				dispatch(setIsLoading(false));
 			}
 		});
 	};
 
 	const onUserRemove = () => {
+		dispatch(setIsLoading(true));
 		dispatch(removeUserAsync(requestServer, userId)).then(
 			({ error, response }) => {
 				if (error !== null) {
@@ -86,6 +90,7 @@ export const UserItem = ({
 					dispatch(setServerError(ERROR_MESSAGE.SERVER));
 				} else {
 					dispatch(CHANGE_UPDATE_USERS_TRIGGER);
+					dispatch(setIsLoading(false));
 				}
 			},
 		);

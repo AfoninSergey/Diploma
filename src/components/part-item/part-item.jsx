@@ -4,7 +4,12 @@ import { Link } from 'react-router-dom';
 import { PartPrice } from '../part-price/part-price';
 import { Button } from '../button/button';
 import { useCartDataToDelete, useServerRequest } from '../../hooks';
-import { openModal, removeCartDataAsync, updateCartAsync } from '../../actions';
+import {
+	openModal,
+	removeCartDataAsync,
+	setIsLoading,
+	updateCartAsync,
+} from '../../actions';
 import { getCombineName, setNoScroll } from '../../utils';
 import styles from './part-item.module.css';
 import { ErrorLabel } from '../error-label/error-label';
@@ -27,6 +32,7 @@ export const PartItem = ({
 	const cartData = useCartDataToDelete(id, price, quantity);
 
 	const onPartFromCartRemove = () => {
+		dispatch(setIsLoading(true));
 		if (cartData.totalNumber !== 0) {
 			dispatch(updateCartAsync(requestServer, cartData)).then((error) => {
 				setErrorMesage(error);
@@ -36,6 +42,7 @@ export const PartItem = ({
 						'currentUserCartData',
 						JSON.stringify(cartData),
 					);
+					dispatch(setIsLoading(false));
 				}
 			});
 		} else {
@@ -45,6 +52,7 @@ export const PartItem = ({
 
 					if (!error && response) {
 						sessionStorage.removeItem('currentUserCartData');
+						dispatch(setIsLoading(false));
 					}
 				},
 			);

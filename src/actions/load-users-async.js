@@ -7,6 +7,6 @@ export const loadUsersAsync = (requestServer, accessError) => (dispatch) =>
 
 		if (!accessError && loadedUsers.response !== null) {
 			dispatch(setUsers(loadedUsers.response));
-			return loadedUsers.response
+			return loadedUsers.response;
 		}
 	});

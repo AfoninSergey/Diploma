@@ -12,7 +12,7 @@ import {
 import { selectCartParts, selectCombines, selectPart } from '../../selectors';
 import { PART_PLUG } from '../../constants';
 import styles from './part.module.css';
-import { updateCartAsync } from '../../actions';
+import { setIsLoading, updateCartAsync } from '../../actions';
 
 export const Part = () => {
 	const { id } = useParams();
@@ -70,6 +70,7 @@ export const Part = () => {
 	};
 
 	const onAddToCart = () => {
+		dispatch(setIsLoading(true));
 		dispatch(updateCartAsync(requestServer, cartData)).then((error) => {
 			setErrorMesage(error);
 
@@ -79,6 +80,7 @@ export const Part = () => {
 					JSON.stringify(cartData),
 				);
 				setQuantityValue('1');
+				dispatch(setIsLoading(false));
 			}
 		});
 	};

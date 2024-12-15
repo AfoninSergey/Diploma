@@ -24,3 +24,4 @@ export * from './select-modal-is-open.js';
 export * from './select-modal-on-confirm.js';
 export * from './select-modal-rest-text.js';
 export * from './select-id-for-part-updating.js';
+export * from './select-is-loading.js';

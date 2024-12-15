@@ -4,17 +4,14 @@ import { Button, Form, Input } from '../../components';
 
 import {
 	LOGOUT,
-	setUser,
-	setStatuses,
 	setLoginValue,
-	setServerError,
 	setPasswordValue,
 	setValidationError,
 	setRepeatPasswordValue,
-	RESET_AUTH_AND_REG_FORM,
 	RESET_AUTH_AND_REG_FORM_ERROR,
-	setCart,
 	RESET_CART,
+	authorizeOrRegisterAsync,
+	setIsLoading,
 } from '../../actions';
 import {
 	selectUserLogin,
@@ -97,33 +94,18 @@ export const AuthorizeAndRegister = () => {
 			return;
 		}
 
-		const serverResponse = isReg
-			? requestServer('register', loginValue, passwordValue)
-			: requestServer('authorize', loginValue, passwordValue);
-
-		serverResponse.then(({ error, response }) => {
-			if (error) {
-				dispatch(setServerError(`Ошибка запроса! ${error}`));
-			} else {
-				dispatch(setUser(response.loadedUser));
-				sessionStorage.setItem(
-					'currentUserData',
-					JSON.stringify(response.loadedUser),
-				);
-				dispatch(setStatuses(response.loadedStatuses));
-				sessionStorage.setItem(
-					'loadedStatuses',
-					JSON.stringify(response.loadedStatuses),
-				);
-				if (response.cart && Object.keys(response.cart).length !== 0) {
-					dispatch(setCart(response.cart));
-					sessionStorage.setItem(
-						'currentUserCartData',
-						JSON.stringify(response.cart),
-					);
-				}
-				dispatch(RESET_AUTH_AND_REG_FORM);
+		dispatch(setIsLoading(true))
+		dispatch(
+			authorizeOrRegisterAsync(
+				requestServer,
+				isReg,
+				loginValue,
+				passwordValue,
+			),
+		).then(({ successfully }) => {
+			if (successfully) {
 				navigate('/');
+				dispatch(setIsLoading(false))
 			}
 		});
 	};

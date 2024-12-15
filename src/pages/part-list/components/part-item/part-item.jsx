@@ -10,26 +10,25 @@ import {
 	resetPartData,
 	savePartDataAsync,
 	setIdForPartUpdating,
+	setIsLoading,
 	setServerError,
 	updateChangedPart,
 } from '../../../../actions';
 import styles from './part-item.module.css';
 
 export const PartItem = ({ id, combines, part }) => {
-
 	const [initialPartData, setInitialPartData] = useState(part);
 	const loadedPart = useSelector(selectPart(id)) || {};
-	const updatePartTrigger = useSelector(selectUpdatePartsTrigger)
+	const updatePartTrigger = useSelector(selectUpdatePartsTrigger);
 
 	const { article, name, quantity, price, imageUrl, combineId } = loadedPart;
 
 	const dispatch = useDispatch();
 	const requestServer = useServerRequest();
 
-
 	useEffect(() => {
-		setInitialPartData(part)
-	}, [updatePartTrigger, part])
+		setInitialPartData(part);
+	}, [updatePartTrigger, part]);
 
 	const onPartDataChange = ({ target: { value, name } }) => {
 		dispatch(setServerError(null));
@@ -63,18 +62,25 @@ export const PartItem = ({ id, combines, part }) => {
 
 	const onPartDataSave = () => {
 		dispatch(setServerError(null));
+		dispatch(setIsLoading(true))
 		dispatch(savePartDataAsync(requestServer, id, loadedPart)).then(
 			({ error, response }) => {
 				if (error === null && response.id !== undefined) {
 					setInitialPartData(response);
 					dispatch(setIdForPartUpdating(response.id));
+					dispatch(setIsLoading(false))
 				}
 			},
 		);
 	};
 
 	const onPartRemove = () => {
-		dispatch(removePartAsync(requestServer, id));
+		dispatch(setIsLoading(true));
+		dispatch(removePartAsync(requestServer, id)).then(({ successfully }) => {
+			if (successfully) {
+				dispatch(setIsLoading(false));
+			}
+		});
 	};
 
 	const onOpenModal = () => {

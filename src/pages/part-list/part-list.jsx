@@ -7,6 +7,7 @@ import {
 	selectAccessError,
 	selectCombines,
 	selectIdForPartUpdating,
+	selectIsLoading,
 	selectParts,
 	selectServerError,
 } from '../../selectors';
@@ -23,6 +24,7 @@ import {
 	checkAccessAsync,
 	savePartsDataAsync,
 	setIdForPartUpdating,
+	setIsLoading,
 	setParts,
 } from '../../actions';
 import { useServerRequest } from '../../hooks';
@@ -33,6 +35,7 @@ export const PartList = () => {
 	const accessError = useSelector(selectAccessError);
 	const serverError = useSelector(selectServerError);
 	const idForPartUpdating = useSelector(selectIdForPartUpdating);
+	const isLoading = useSelector(selectIsLoading);
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const [initialParts, setInitialParts] = useState([]);
@@ -46,7 +49,10 @@ export const PartList = () => {
 	const requestServer = useServerRequest();
 
 	useEffect(() => {
-		dispatch(checkAccessAsync(requestServer));
+		dispatch(setIsLoading(true));
+		dispatch(checkAccessAsync(requestServer)).then((error) => {
+			if (!error) dispatch(setIsLoading(false));
+		});
 	}, [dispatch, requestServer]);
 
 	useEffect(() => {
@@ -134,6 +140,7 @@ export const PartList = () => {
 	};
 
 	const onSaveAllPartsChanges = () => {
+		dispatch(setIsLoading(true));
 		dispatch(savePartsDataAsync(requestServer, initialParts, parts)).then(
 			({ updatedSuccessfully }) => {
 				if (updatedSuccessfully) {
@@ -152,6 +159,7 @@ export const PartList = () => {
 					}
 
 					setPartsToDisplay(updatedParts);
+					dispatch(setIsLoading(false));
 				}
 			},
 		);
@@ -182,7 +190,7 @@ export const PartList = () => {
 	const isSaveButtonDisabled =
 		isCancelButtonDisabled || parts.some(({ price }) => isNaN(price));
 
-	if (accessError) return <ErrorPage>{accessError}</ErrorPage>;
+	if (accessError && !isLoading) return <ErrorPage>{accessError}</ErrorPage>;
 	return (
 		<div className={styles.partList}>
 			<SearchPanel
