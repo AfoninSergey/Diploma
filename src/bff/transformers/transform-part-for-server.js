@@ -1,3 +1,5 @@
+import { getZeros } from "../utils";
+
 export const transformPartForServer = ({
 	imageUrl,
 	combineId,
@@ -9,7 +11,7 @@ export const transformPartForServer = ({
 	image_url: imageUrl,
 	combine_id: combineId,
 	quantity: +quantity,
+	name: name.toUpperCase(),
+	price: getZeros(price),
 	article,
-	name,
-	price,
 });

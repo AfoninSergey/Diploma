@@ -123,7 +123,7 @@ export const PartItem = ({ id, combines, part }) => {
 				onChange={onPartDataChange}
 				onBlur={onPartDataBlur}
 			/>
-			<div className={styles.partQuantity}>
+			<div className={styles.quantity}>
 				<Input
 					name="quantity"
 					value={quantity}

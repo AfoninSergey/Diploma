@@ -35,3 +35,5 @@ export * from './remove-part-async';
 export * from './save-parts-data-async';
 export * from './set-is-loading';
 export * from './authorize-or-register-async';
+export * from './add-new-part-async';
+export * from './add-new-part'

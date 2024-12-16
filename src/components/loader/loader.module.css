@@ -14,8 +14,8 @@
 .loaderContent {
 	display: flex;
 	column-gap: 40px;
-	/* transform: rotate(30deg); */
-	transform: rotate(30deg) scale(.5);
+	transform: rotate(30deg);
+	/* transform: rotate(30deg) scale(.5); */
 }
 .wrapper2  {
 	transform: rotate(30deg);

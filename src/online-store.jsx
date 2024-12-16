@@ -3,8 +3,10 @@ import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { useServerRequest } from './hooks';
 import {
+	AddPart,
 	AuthorizeAndRegister,
 	CartPage,
+	ErrorPage,
 	Main,
 	Part,
 	PartList,
@@ -20,6 +22,7 @@ import {
 	setUser,
 } from './actions';
 import styles from './online-store.module.css';
+import { ERROR_MESSAGE } from './constants';
 
 export const OnlineStore = () => {
 	const dispatch = useDispatch();
@@ -54,18 +57,11 @@ export const OnlineStore = () => {
 		<div className={styles.onlineStore}>
 			<h1>"Сельхоззапчасть" - Интернет-магазин сельхоззапчастей.</h1>
 
+			<Loader />
 			<Header />
 			<Routes>
 				<Route path="/" element={<Main />} />
-
-				<Route
-					path="/part"
-					element={
-						<div>
-							<h2>New part</h2>
-						</div>
-					}
-				/>
+				<Route path="/add" element={<AddPart />} />
 				<Route path="/edit" element={<PartList />} />
 				<Route path="/parts" element={<Main />} />
 				<Route path="/part/:id" element={<Part />} />
@@ -76,13 +72,10 @@ export const OnlineStore = () => {
 				<Route
 					path="/*"
 					element={
-						<div>
-							<h2>Error</h2>
-						</div>
+						<ErrorPage>{ERROR_MESSAGE.NON_EXISTENT_PAGE}</ErrorPage>
 					}
 				/>
 			</Routes>
-			<Loader />
 			<Modal />
 		</div>
 	);

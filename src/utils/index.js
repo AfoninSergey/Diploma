@@ -1,7 +1,7 @@
 export * from './validate-login';
 export * from './validate-password';
 export * from './validate-repeat-password';
-export * from './validate-submit-data';
+export * from './validate-submit-client-data';
 export * from './get-current-sorting-order';
 export * from './search';
 export * from './sort-by-number';
@@ -15,3 +15,4 @@ export * from './filter-parts-by-combine';
 export * from './get-discounted-price';
 export * from './set-no-scroll';
 export * from './get-current-quantity';
+export * from './validate-submit-new-part-data';

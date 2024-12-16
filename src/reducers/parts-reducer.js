@@ -1,4 +1,6 @@
 import { ACTION_TYPE } from '../actions';
+import { SORTING_ORDER } from '../constants';
+import { sortByAlphabet } from '../utils';
 
 const initialPartsState = {
 	partList: [],
@@ -31,6 +33,18 @@ export const partsReducer = (state = initialPartsState, { type, payload }) => {
 				...state,
 				partList: state.partList.filter((part) => part.id !== payload),
 			};
+		case ACTION_TYPE.ADD_NEW_PART: {
+			const sortedPartListWithNewPart = sortByAlphabet(
+				SORTING_ORDER.DESCENDING,
+				[...state.partList, payload],
+				'name',
+			);
+
+			return {
+				...state,
+				partList: sortedPartListWithNewPart,
+			};
+		}
 		case ACTION_TYPE.SET_PART_ID:
 			return { ...state, idForPartUpdating: payload };
 		case ACTION_TYPE.CHANGE_UPDATE_PARTS_TRIGGER:

@@ -25,7 +25,7 @@ import {
 	validateLogin,
 	validatePassword,
 	validateRepeatPassword,
-	validateSubmitData,
+	validateSubmitClientData,
 } from '../../utils';
 import styles from './authorize-and-register.module.css';
 import { useServerRequest } from '../../hooks';
@@ -81,7 +81,7 @@ export const AuthorizeAndRegister = () => {
 		const newError =
 			validateLogin(loginValue) ||
 			validatePassword(passwordValue) ||
-			validateSubmitData(
+			validateSubmitClientData(
 				loginValue,
 				passwordValue,
 				repeatPasswordValue,
@@ -94,7 +94,7 @@ export const AuthorizeAndRegister = () => {
 			return;
 		}
 
-		dispatch(setIsLoading(true))
+		dispatch(setIsLoading(true));
 		dispatch(
 			authorizeOrRegisterAsync(
 				requestServer,
@@ -105,7 +105,7 @@ export const AuthorizeAndRegister = () => {
 		).then(({ successfully }) => {
 			if (successfully) {
 				navigate('/');
-				dispatch(setIsLoading(false))
+				dispatch(setIsLoading(false));
 			}
 		});
 	};
