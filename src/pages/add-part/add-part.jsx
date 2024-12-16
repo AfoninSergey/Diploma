@@ -1,16 +1,19 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, Input, Select } from '../../components';
 import styles from './add-part.module.css';
-import { selectCombines, selectServerError } from '../../selectors';
-import { useState } from 'react';
+import { selectAccessError, selectCombines, selectIsLoading, selectServerError } from '../../selectors';
+import { useEffect, useState } from 'react';
 import { ERROR_MESSAGE, INITIAL_PART_DATA } from '../../constants';
 import { validateSubmitNewPartData } from '../../utils';
-import { addNewPartAsync, setIsLoading, setServerError } from '../../actions';
+import { addNewPartAsync, checkAccessAsync, setIsLoading, setServerError } from '../../actions';
 import { useServerRequest } from '../../hooks';
+import { ErrorPage } from '../error-page/error-page';
 
 export const AddPart = () => {
 	const combines = useSelector(selectCombines);
 	const serverError = useSelector(selectServerError);
+	const isLoading = useSelector(selectIsLoading);
+	const accessError = useSelector(selectAccessError);
 
 	const [partData, setPartData] = useState(INITIAL_PART_DATA);
 	const [validationError, setValidationError] = useState(null);
@@ -19,6 +22,14 @@ export const AddPart = () => {
 
 	const dispatch = useDispatch();
 	const requestServer = useServerRequest();
+
+
+	useEffect(() => {
+			dispatch(setIsLoading(true));
+			dispatch(checkAccessAsync(requestServer)).then((error) => {
+				if (!error) dispatch(setIsLoading(false));
+			});
+		}, [dispatch, requestServer]);
 
 	const onPartDataChange = ({ target: { value, name } }) => {
 		setSuccessInfo(null);
@@ -59,6 +70,8 @@ export const AddPart = () => {
 			},
 		);
 	};
+
+	if (accessError && !isLoading) return <ErrorPage>{accessError}</ErrorPage>;
 
 	const adminInfo = validationError || serverError || successInfo;
 
