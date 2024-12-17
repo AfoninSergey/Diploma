@@ -6,13 +6,14 @@ import { setUser } from './set-user';
 
 export const authorizeOrRegisterAsync =
 	(requestServer, isReg, login, password) => (dispatch) => {
-		
 		const request = isReg ? 'register' : 'authorize';
 
 		return requestServer(request, login, password).then(
 			({ error, response }) => {
 				if (error) {
 					dispatch(setServerError(`Ошибка запроса! ${error}`));
+					dispatch(RESET_AUTH_AND_REG_FORM);
+					return { successfully: false };
 				} else {
 					dispatch(setUser(response.loadedUser));
 					sessionStorage.setItem(

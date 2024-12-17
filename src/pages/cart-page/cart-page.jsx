@@ -14,7 +14,7 @@ export const CartPage = () => {
 				<InfoBlock>Ваша корзина пуста...</InfoBlock>
 			) : (
 				<ul className={styles.partsList}>
-					{' '}
+					
 					{cartParts.map(({ id, ...props }) => (
 						<PartItem
 							key={id}

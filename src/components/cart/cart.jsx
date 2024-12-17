@@ -30,7 +30,7 @@ export const Cart = () => {
 					</div>
 				</div>
 
-				{isCart && <Button  disabled={cartTotalNumber === 0}>Оформить</Button>}
+				{isCart && <Link to="/order"><Button  disabled={cartTotalNumber === 0}>Оформить</Button></Link>}
 			</div>
 		</Link>
 	);

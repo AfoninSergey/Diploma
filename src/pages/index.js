@@ -6,3 +6,4 @@ export * from './part/part';
 export * from './cart-page/cart-page';
 export * from './part-list/part-list';
 export * from './add-part/add-part';
+export * from './order/order';

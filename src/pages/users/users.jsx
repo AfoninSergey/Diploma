@@ -47,8 +47,8 @@ export const Users = () => {
 		dispatch(loadUsersAsync(requestServer, accessError)).then((response) => {
 			if (response !== undefined) {
 				setUsersToDisplay(response);
-				dispatch(setIsLoading(false))
 			}
+			dispatch(setIsLoading(false))
 		});
 	}, [requestServer, dispatch, accessError, updateUsersTrigger]);
 

@@ -50,8 +50,8 @@ export const PartList = () => {
 
 	useEffect(() => {
 		dispatch(setIsLoading(true));
-		dispatch(checkAccessAsync(requestServer)).then((error) => {
-			if (!error) dispatch(setIsLoading(false));
+		dispatch(checkAccessAsync(requestServer)).then(() => {
+			dispatch(setIsLoading(false));
 		});
 	}, [dispatch, requestServer]);
 
@@ -159,8 +159,8 @@ export const PartList = () => {
 					}
 
 					setPartsToDisplay(updatedParts);
-					dispatch(setIsLoading(false));
 				}
+				dispatch(setIsLoading(false));
 			},
 		);
 	};

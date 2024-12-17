@@ -62,25 +62,23 @@ export const PartItem = ({ id, combines, part }) => {
 
 	const onPartDataSave = () => {
 		dispatch(setServerError(null));
-		dispatch(setIsLoading(true))
+		dispatch(setIsLoading(true));
 		dispatch(savePartDataAsync(requestServer, id, loadedPart)).then(
 			({ error, response }) => {
 				if (error === null && response.id !== undefined) {
 					setInitialPartData(response);
 					dispatch(setIdForPartUpdating(response.id));
-					dispatch(setIsLoading(false))
 				}
+				dispatch(setIsLoading(false));
 			},
 		);
 	};
 
 	const onPartRemove = () => {
 		dispatch(setIsLoading(true));
-		dispatch(removePartAsync(requestServer, id)).then(({ successfully }) => {
-			if (successfully) {
-				dispatch(setIsLoading(false));
-			}
-		});
+		dispatch(removePartAsync(requestServer, id)).then(() =>
+			dispatch(setIsLoading(false))
+		);
 	};
 
 	const onOpenModal = () => {

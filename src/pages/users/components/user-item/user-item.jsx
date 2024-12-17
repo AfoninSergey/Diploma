@@ -75,8 +75,8 @@ export const UserItem = ({
 				setInitialStatusId(response.statusId);
 				setInitialAmount(getZeros(response.amount));
 				setUserAmount(getZeros(response.amount));
-				dispatch(setIsLoading(false));
 			}
+			dispatch(setIsLoading(false));
 		});
 	};
 
@@ -90,8 +90,8 @@ export const UserItem = ({
 					dispatch(setServerError(ERROR_MESSAGE.SERVER));
 				} else {
 					dispatch(CHANGE_UPDATE_USERS_TRIGGER);
-					dispatch(setIsLoading(false));
 				}
+				dispatch(setIsLoading(false));
 			},
 		);
 	};

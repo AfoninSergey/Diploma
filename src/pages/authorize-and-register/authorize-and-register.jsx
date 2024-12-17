@@ -105,8 +105,8 @@ export const AuthorizeAndRegister = () => {
 		).then(({ successfully }) => {
 			if (successfully) {
 				navigate('/');
-				dispatch(setIsLoading(false));
 			}
+			dispatch(setIsLoading(false));
 		});
 	};
 

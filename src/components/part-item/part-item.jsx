@@ -42,8 +42,8 @@ export const PartItem = ({
 						'currentUserCartData',
 						JSON.stringify(cartData),
 					);
-					dispatch(setIsLoading(false));
 				}
+				dispatch(setIsLoading(false));
 			});
 		} else {
 			dispatch(removeCartDataAsync(requestServer, cartData.id)).then(
@@ -52,8 +52,8 @@ export const PartItem = ({
 
 					if (!error && response) {
 						sessionStorage.removeItem('currentUserCartData');
-						dispatch(setIsLoading(false));
 					}
+					dispatch(setIsLoading(false));
 				},
 			);
 		}

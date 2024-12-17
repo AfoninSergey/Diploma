@@ -8,6 +8,7 @@ import {
 	CartPage,
 	ErrorPage,
 	Main,
+	Order,
 	Part,
 	PartList,
 	Users,
@@ -67,6 +68,7 @@ export const OnlineStore = () => {
 				<Route path="/part/:id" element={<Part />} />
 				<Route path="/cart" element={<CartPage />} />
 				<Route path="/users" element={<Users />} />
+				<Route path="/order" element={<Order/>} />
 				<Route path="/login" element={<AuthorizeAndRegister />} />
 				<Route path="/register" element={<AuthorizeAndRegister />} />
 				<Route

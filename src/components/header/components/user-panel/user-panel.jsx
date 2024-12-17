@@ -18,7 +18,8 @@ export const UserPanel = () => {
 	const dispatch = useDispatch();
 	const requestServer = useServerRequest();
 	const isCart = !!useMatch('/cart');
-	const isPart = useMatch('/part/:id');
+	const isPart = !!useMatch('/part/:id');
+	const isOrder = !!useMatch('/order')
 
 
 	const onLogout = () => {
@@ -32,7 +33,7 @@ export const UserPanel = () => {
 
 	return (
 		<div className={styles.userPanel}>
-			{!isCart && !isPart && cartTotalNumber !== 0 && <Link to="/cart">
+			{!isCart && !isPart && !isOrder && cartTotalNumber !== 0 && <Link to="/cart">
 				<img
 					src="../pictures/icons/cart+.png"
 					alt="Корзина"

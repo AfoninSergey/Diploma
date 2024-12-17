@@ -13,3 +13,4 @@ export * from './update-part-data';
 export * from './remove-part';
 export * from './update-parts-data';
 export * from './add-new-part';
+export * from './place-client-order';

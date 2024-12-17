@@ -1,38 +1,51 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { Button, Form, Input, Select } from '../../components';
-import styles from './add-part.module.css';
-import { selectAccessError, selectCombines, selectIsLoading, selectServerError } from '../../selectors';
 import { useEffect, useState } from 'react';
-import { ERROR_MESSAGE, INITIAL_PART_DATA } from '../../constants';
-import { validateSubmitNewPartData } from '../../utils';
-import { addNewPartAsync, checkAccessAsync, setIsLoading, setServerError } from '../../actions';
-import { useServerRequest } from '../../hooks';
+import { useDispatch, useSelector } from 'react-redux';
 import { ErrorPage } from '../error-page/error-page';
+import { Button, Form, Input, Select } from '../../components';
+import {
+	selectAccessError,
+	selectCombines,
+	selectIsLoading,
+	selectServerError,
+	selectSuccessInfo,
+} from '../../selectors';
+import { ERROR_MESSAGE, INITIAL_PART_DATA } from '../../constants';
+import {
+	addNewPartAsync,
+	checkAccessAsync,
+	setIsLoading,
+	setServerError,
+	setSuccessInfo,
+} from '../../actions';
+import { validateSubmitNewPartData } from '../../utils';
+import { useServerRequest } from '../../hooks';
+import styles from './add-part.module.css';
 
 export const AddPart = () => {
 	const combines = useSelector(selectCombines);
 	const serverError = useSelector(selectServerError);
 	const isLoading = useSelector(selectIsLoading);
 	const accessError = useSelector(selectAccessError);
+	const successInfo = useSelector(selectSuccessInfo)
 
 	const [partData, setPartData] = useState(INITIAL_PART_DATA);
 	const [validationError, setValidationError] = useState(null);
-	const [successInfo, setSuccessInfo] = useState(null);
+
+	// const [successInfo, setSuccessInfo] = useState(null);
 	const { article, name, quantity, price, imageUrl, combineId } = partData;
 
 	const dispatch = useDispatch();
 	const requestServer = useServerRequest();
 
-
 	useEffect(() => {
-			dispatch(setIsLoading(true));
-			dispatch(checkAccessAsync(requestServer)).then((error) => {
-				if (!error) dispatch(setIsLoading(false));
-			});
-		}, [dispatch, requestServer]);
+		dispatch(setIsLoading(true));
+		dispatch(checkAccessAsync(requestServer)).then(() => {
+			dispatch(setIsLoading(false));
+		});
+	}, [dispatch, requestServer]);
 
 	const onPartDataChange = ({ target: { value, name } }) => {
-		setSuccessInfo(null);
+		dispatch(setSuccessInfo(null))
 		dispatch(setServerError(null));
 		if (name === 'quantity') {
 			value =
@@ -63,10 +76,11 @@ export const AddPart = () => {
 		dispatch(addNewPartAsync(requestServer, partData)).then(
 			({ successfully }) => {
 				if (successfully) {
-					dispatch(setIsLoading(false));
 					setPartData(INITIAL_PART_DATA);
-					setSuccessInfo('УСПЕШНО!');
+					dispatch(setSuccessInfo('УСПЕШНО!'))
+
 				}
+				dispatch(setIsLoading(false));
 			},
 		);
 	};
@@ -78,6 +92,7 @@ export const AddPart = () => {
 	return (
 		<Form
 			className={styles.add}
+			addClass={successInfo ? 'green' : ''}
 			title="Добавить запчасть:"
 			errorMessage={adminInfo}
 			onSubmit={onSubmit}

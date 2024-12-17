@@ -19,3 +19,24 @@
 	color: rgb(135, 0, 0);
 	z-index: 2;
 }
+
+.errorLabel.green {
+
+	color: #548933;
+	font-weight: bold;
+	font-size: 2.5rem;
+}
+
+.errorLabel.green button {
+position: absolute;
+top: -70px;
+right: 3px;
+color: #000000;
+font-size: 3rem;
+font-weight: 400;
+cursor: pointer;
+}
+
+.errorLabel.hidden {
+	display: none;
+}

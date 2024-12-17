@@ -17,6 +17,7 @@ const initialAppState = {
 	serverError: null,
 	accessError: ERROR_MESSAGE.ACCESS,
 	isLoading: true,
+	successInfo: null,
 };
 export const appReducer = (state = initialAppState, { type, payload }) => {
 	switch (type) {
@@ -98,11 +99,17 @@ export const appReducer = (state = initialAppState, { type, payload }) => {
 				...state,
 				modal: initialAppState.modal,
 			};
-case ACTION_TYPE.SET_IS_LOADING:
-	return {
-		...state,
-		isLoading: payload
-	}
+
+		case ACTION_TYPE.SET_SUCCESS_INFO:
+			return {
+				...state,
+				successInfo: payload,
+			};
+		case ACTION_TYPE.SET_IS_LOADING:
+			return {
+				...state,
+				isLoading: payload,
+			};
 		default:
 			return state;
 	}

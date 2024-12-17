@@ -80,8 +80,8 @@ export const Part = () => {
 					JSON.stringify(cartData),
 				);
 				setQuantityValue('1');
-				dispatch(setIsLoading(false));
 			}
+			dispatch(setIsLoading(false));
 		});
 	};
 

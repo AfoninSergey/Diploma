@@ -1,5 +1,6 @@
 export * from './add-user';
 export * from './add-part';
+export * from './add-order';
 export * from './add-session';
 export * from './delete-user';
 export * from './delete-part';

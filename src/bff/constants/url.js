@@ -6,4 +6,5 @@ export const URL = {
 	PARTS: 'http://localhost:3005/parts',
 	SESSIONS: 'http://localhost:3005/sessions',
 	CART_DATA: 'http://localhost:3005/cart',
+	ORDERS: ' http://localhost:3005/orders',
 };
