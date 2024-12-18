@@ -20,14 +20,14 @@
 	z-index: 2;
 }
 
-.errorLabel.green {
+.errorLabel.succes {
 
 	color: #548933;
 	font-weight: bold;
 	font-size: 2.5rem;
 }
 
-.errorLabel.green button {
+.errorLabel.succes button {
 position: absolute;
 top: -70px;
 right: 3px;
@@ -35,8 +35,4 @@ color: #000000;
 font-size: 3rem;
 font-weight: 400;
 cursor: pointer;
-}
-
-.errorLabel.hidden {
-	display: none;
 }

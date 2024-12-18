@@ -92,7 +92,6 @@ export const AddPart = () => {
 	return (
 		<Form
 			className={styles.add}
-			addClass={successInfo ? 'green' : ''}
 			title="Добавить запчасть:"
 			errorMessage={adminInfo}
 			onSubmit={onSubmit}

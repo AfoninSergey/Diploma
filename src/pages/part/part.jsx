@@ -9,20 +9,21 @@ import {
 	getZeros,
 	setNoScroll,
 } from '../../utils';
-import { selectCartParts, selectCombines, selectPart } from '../../selectors';
+import { selectCartParts, selectCombines, selectIsLoading, selectPart } from '../../selectors';
 import { PART_PLUG } from '../../constants';
 import styles from './part.module.css';
 import { setIsLoading, updateCartAsync } from '../../actions';
+import { ErrorPage } from '../error-page/error-page';
 
 export const Part = () => {
 	const { id } = useParams();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-
 	const combines = useSelector(selectCombines);
 	const { imageUrl, article, name, combineId, price, quantity } =
 		useSelector(selectPart(id)) || PART_PLUG;
 	const cartParts = useSelector(selectCartParts);
+	const isLoading = useSelector(selectIsLoading)
 
 	const currentQuantity = getCurrentQuantity(quantity, cartParts, id);
 
@@ -84,6 +85,11 @@ export const Part = () => {
 			dispatch(setIsLoading(false));
 		});
 	};
+
+
+	if (!isLoading && article === '00.00.00.000') {
+		return <ErrorPage>Нет такой запчасти...</ErrorPage>
+	}
 
 	const combineName =
 		combines.length !== 0 ? getCombineName(combines, combineId) : '';

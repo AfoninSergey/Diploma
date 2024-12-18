@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { placeOrderAsync, setIsLoading, setSuccessInfo } from '../../actions';
 import { Button, Cart, Form, InfoBlock, Input } from '../../components';
 import {
@@ -8,8 +9,8 @@ import {
 	selectSuccessInfo,
 } from '../../selectors';
 import { DELIVERY_OPTIONS, PAYMENT_OPTIONS } from '../../constants';
-import styles from './order.module.css';
 import { useOrderData, useServerRequest, useUserDataToOrder } from '../../hooks';
+import styles from './order.module.css';
 
 export const Order = () => {
 	const [deliveryChecked, setDeliveryChecked] = useState(DELIVERY_OPTIONS.PICKUP);
@@ -62,10 +63,14 @@ export const Order = () => {
 			<Cart />
 
 			{cartParts.length === 0 && !successInfo ? (
-				<InfoBlock>Ваша корзина пуста...</InfoBlock>
+				<>
+					<InfoBlock>Ваша корзина пуста...</InfoBlock>
+					<Link to="/">
+						<Button>На главную</Button>
+					</Link>
+				</>
 			) : (
 				<Form
-					addClass={successInfo ? 'green' : ''}
 					className={styles.deliveryAndPayment}
 					title="Выберите способ доставки и оплаты:"
 					errorMessage={orderInfo}

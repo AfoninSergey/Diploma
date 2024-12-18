@@ -1,26 +1,20 @@
-import { useState } from 'react';
-import styles from './error-label.module.css';
-import { useDispatch } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
 import { setSuccessInfo } from '../../actions';
+import { selectSuccessInfo } from '../../selectors';
 
-export const ErrorLabel = ({ children, addClass }) => {
-	const [addedClass, setAddedClass] = useState(addClass);
+import styles from './error-label.module.css';
 
+export const ErrorLabel = ({ children }) => {
+	const succesMessage = useSelector(selectSuccessInfo);
 	const dispatch = useDispatch();
 
 	return (
-		<div className={`${styles.errorLabel} ${styles[addedClass]}`}>
-			{children}{' '}
-			{addClass && (
-				<button
-					onClick={() => {
-						setAddedClass('hidden');
-						dispatch(setSuccessInfo(null));
-					}}
-				>
-					×
-				</button>
+		<div
+			className={`${styles.errorLabel} ${succesMessage ? styles.succes : ''}`}
+		>
+			{children}
+			{succesMessage && (
+				<button onClick={() => dispatch(setSuccessInfo(null))}>×</button>
 			)}
 		</div>
 	);
