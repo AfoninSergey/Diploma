@@ -34,6 +34,7 @@ export const authorize = async (authLogin, authPassword) => {
 			response: {
 				loadedUser: { ...user, session },
 				loadedStatuses: statuses,
+				cart: cartFromServer,
 			},
 		};
 

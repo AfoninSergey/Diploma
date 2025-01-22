@@ -32,12 +32,20 @@
 	font-size: 17px;
 	line-height: 17px;
 }
-
+.quantity {
+	position: relative;
+}
 .arrowUp {
+	position: absolute;
 	top: 7px;
+	right: 7px;
+	cursor: pointer;
 }
 .arrowDown {
+	position: absolute;
 	bottom: 7px;
+	right: 7px;
+	cursor: pointer;
 }
 
 .partPrice {

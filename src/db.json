@@ -2,48 +2,70 @@
   "sessions": [],
   "cart": [
     {
-      "id": "WxVmtdj",
+      "id": "2T1Vj-R",
       "selectedParts": [
         {
-          "id": "00263",
+          "id": "00010",
           "imageUrl": "",
-          "article": "3518050-11070-01",
-          "name": "ОБОЙМА ГЛАЗКА ШНЕКА",
+          "article": "3518050-121030",
+          "name": "БАШМАК КОПИРУЮЩИЙ С РЫЧАГОМ",
           "combineId": "02",
-          "quantity": 10,
-          "price": "300.00"
-        },
-        {
-          "id": "00085",
-          "imageUrl": "",
-          "article": "10Б.14.62.602",
-          "name": "ВТУЛКА ДЛЯ НОЖА БАРАБАНА",
-          "combineId": "02",
-          "quantity": 10,
-          "price": "780.00"
-        },
-        {
-          "id": "00002",
-          "imageUrl": "",
-          "article": "5.14.02.020",
-          "name": "БАРАБАН ИЗМЕЛЬЧАЮЩИЙ В СБОРЕ",
-          "combineId": "06",
           "quantity": 1,
-          "price": "50400.00"
+          "price": "8400.00"
         }
       ],
-      "totalNumber": 21,
-      "totalAmount": "51480.00",
-      "cartDataOnServer": true
+      "totalNumber": 1,
+      "totalAmount": "8400.00"
     }
   ],
-  "orders": [],
+  "orders": [
+    {
+      "selectedParts": [
+        {
+          "id": "00010",
+          "imageUrl": "",
+          "article": "3518050-121030",
+          "name": "БАШМАК КОПИРУЮЩИЙ С РЫЧАГОМ",
+          "combineId": "02",
+          "quantity": 1,
+          "price": "7980.00"
+        }
+      ],
+      "totalNumber": 1,
+      "totalAmount": "7980.00",
+      "userId": "WxVmtdj",
+      "delivery": "Самовывоз",
+      "payment": "Наличными при получении",
+      "id": 8
+    },
+    {
+      "selectedParts": [
+        {
+          "id": "00312",
+          "imageUrl": "",
+          "article": "3518050-10009",
+          "name": "ПОЛУПОДШИПНИК ВЕРХНИЙ ГРАБЛИНЫ МОТОВИЛА",
+          "combineId": "02",
+          "quantity": 1,
+          "price": "16.30"
+        }
+      ],
+      "totalNumber": 1,
+      "totalAmount": "16.30",
+      "userId": "2T1Vj-R",
+      "delivery": "Самовывоз",
+      "payment": "Наличными при получении",
+      "id": 9
+    }
+  ],
   "users": [
     {
       "id": "0001",
       "login": "admin",
       "password": "123",
-      "role_id": 2
+      "role_id": 2,
+      "status_id": 1,
+      "amount": "35880.00"
     },
     {
       "id": "0002",
@@ -74,7 +96,7 @@
       "password": "123",
       "role_id": 1,
       "status_id": 0,
-      "amount": "1",
+      "amount": "17.30",
       "id": "2T1Vj-R"
     },
     {
@@ -105,8 +127,8 @@
       "login": "Gray",
       "password": "123",
       "role_id": 1,
-      "status_id": 0,
-      "amount": "4.00",
+      "status_id": 2,
+      "amount": "185441.56",
       "id": "WxVmtdj"
     },
     {
@@ -248,7 +270,7 @@
       "name": "БАШМАК ЖАТКИ КОПИРУЮЩИЙ",
       "price": "6480.00",
       "combine_id": "07",
-      "quantity": 138
+      "quantity": 137
     },
     {
       "id": "00007",
@@ -284,7 +306,7 @@
       "name": "БАШМАК КОПИРУЮЩИЙ С РЫЧАГОМ",
       "price": "8400.00",
       "combine_id": "02",
-      "quantity": 143
+      "quantity": 142
     },
     {
       "id": "00011",

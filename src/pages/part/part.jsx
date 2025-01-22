@@ -74,7 +74,6 @@ export const Part = () => {
 		dispatch(setIsLoading(true));
 		dispatch(updateCartAsync(requestServer, cartData)).then((error) => {
 			setErrorMesage(error);
-
 			if (!error) {
 				sessionStorage.setItem(
 					'currentUserCartData',

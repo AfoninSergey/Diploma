@@ -51,6 +51,7 @@ export const Order = () => {
 					setDeliveryChecked(DELIVERY_OPTIONS.PICKUP);
 					setPaymentChecked(PAYMENT_OPTIONS.CASH);
 					setDeliveryAddress('');
+					setTimeout(() => dispatch(setSuccessInfo(null)), 10000)
 				}
 				dispatch(setIsLoading(false));
 			},
